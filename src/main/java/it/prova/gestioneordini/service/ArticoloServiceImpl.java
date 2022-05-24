@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import it.prova.gestioneordini.dao.EntityManagerUtil;
 import it.prova.gestioneordini.dao.articolo.ArticoloDAO;
+import it.prova.gestioneordini.exception.ArticoloConCategorieAssegnateException;
 import it.prova.gestioneordini.model.Articolo;
 
 public class ArticoloServiceImpl implements ArticoloService {
@@ -95,6 +96,12 @@ public class ArticoloServiceImpl implements ArticoloService {
 			entityManager.getTransaction().begin();
 
 			articoloDAO.setEntityManager(entityManager);
+
+			Articolo articoloDaRimuovere = articoloDAO.findByIdFetchingCategorie(idArticolo);
+			if (!articoloDaRimuovere.getCategorie().isEmpty()) {
+				throw new ArticoloConCategorieAssegnateException(
+						"Impossibile rimuovere articolo: ha delle categorie assegnate");
+			}
 
 			articoloDAO.delete(articoloDAO.get(idArticolo));
 
