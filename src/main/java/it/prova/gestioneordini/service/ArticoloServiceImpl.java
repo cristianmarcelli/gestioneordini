@@ -109,7 +109,7 @@ public class ArticoloServiceImpl implements ArticoloService {
 	}
 
 	@Override
-	public void setOrdineDAO(ArticoloDAO articoloDAO) {
+	public void setArticoloDAO(ArticoloDAO articoloDAO) {
 		this.articoloDAO = articoloDAO;
 	}
 

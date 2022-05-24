@@ -15,8 +15,8 @@ public interface ArticoloService {
 
 	public void inserisciNuovo(Articolo articoloInstance) throws Exception;
 
-	public void rimuovi(Long idGenere) throws Exception;
+	public void rimuovi(Long idArticolo) throws Exception;
 
 	// per injection
-	public void setOrdineDAO(ArticoloDAO articoloDAO);
+	public void setArticoloDAO(ArticoloDAO articoloDAO);
 }
