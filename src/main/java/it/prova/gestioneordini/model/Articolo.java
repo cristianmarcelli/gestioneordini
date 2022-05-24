@@ -43,7 +43,7 @@ public class Articolo {
 	private Set<Categoria> categorie = new HashSet<Categoria>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ordine_id")
+	@JoinColumn(name = "ordine_id", nullable = false)
 	private Ordine ordine;
 
 	@CreationTimestamp
