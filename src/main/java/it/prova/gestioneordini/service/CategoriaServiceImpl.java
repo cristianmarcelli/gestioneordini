@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import it.prova.gestioneordini.dao.EntityManagerUtil;
 import it.prova.gestioneordini.dao.categoria.CategoriaDAO;
+import it.prova.gestioneordini.model.Articolo;
 import it.prova.gestioneordini.model.Categoria;
 
 public class CategoriaServiceImpl implements CategoriaService {
@@ -123,6 +124,29 @@ public class CategoriaServiceImpl implements CategoriaService {
 			return categoriaDAO.findByIdFetchingArticoli(id);
 
 		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+	}
+
+	@Override
+	public void aggiungiArticolo(Categoria categoriaInstance, Articolo articoloInstance) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+
+			categoriaDAO.setEntityManager(entityManager);
+
+			articoloInstance = entityManager.merge(articoloInstance);
+			categoriaInstance = entityManager.merge(categoriaInstance);
+
+			articoloInstance.getCategorie().add(categoriaInstance);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
 			e.printStackTrace();
 			throw e;
 		} finally {
