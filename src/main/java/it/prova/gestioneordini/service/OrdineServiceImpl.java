@@ -88,7 +88,7 @@ public class OrdineServiceImpl implements OrdineService {
 	}
 
 	@Override
-	public void rimuovi(Long idGenere) throws Exception {
+	public void rimuovi(Long idOrdine) throws Exception {
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
@@ -96,7 +96,7 @@ public class OrdineServiceImpl implements OrdineService {
 
 			ordineDAO.setEntityManager(entityManager);
 
-			ordineDAO.delete(ordineDAO.get(idGenere));
+			ordineDAO.delete(ordineDAO.get(idOrdine));
 
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
