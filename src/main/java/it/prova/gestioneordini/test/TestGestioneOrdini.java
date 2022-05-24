@@ -1,6 +1,11 @@
 package it.prova.gestioneordini.test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import it.prova.gestioneordini.dao.EntityManagerUtil;
+import it.prova.gestioneordini.model.Articolo;
+import it.prova.gestioneordini.model.Ordine;
 import it.prova.gestioneordini.service.ArticoloService;
 import it.prova.gestioneordini.service.CategoriaService;
 import it.prova.gestioneordini.service.MyServiceFactory;
@@ -25,6 +30,9 @@ public class TestGestioneOrdini {
 			System.out.println(
 					"*************************************************************************************************");
 
+			testInserimentoNuovoOrdine(ordineServiceInstance);
+			
+			
 			System.out.println(
 					"****************************** fine batteria di test ********************************************");
 			System.out.println(
@@ -41,5 +49,18 @@ public class TestGestioneOrdini {
 			EntityManagerUtil.shutdown();
 		}
 
+	}
+
+	private static void testInserimentoNuovoOrdine(OrdineService ordineServiceInstance) throws Exception {
+		System.out.println(".......testInserimentoNuovoOrdine inizio.............");
+
+		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("24/09/2019");
+		
+		Ordine ordineInstance = new Ordine("Valerio Ma", "Roma - Via Italia, 43", dataPubblicazioneOrdine);
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
+		if (ordineInstance.getId() == null)
+			throw new RuntimeException("testInserimentoNuovoArticolo fallito ");
+
+		System.out.println(".......testInserimentoNuovoOrdine fine: PASSED.............");
 	}
 }

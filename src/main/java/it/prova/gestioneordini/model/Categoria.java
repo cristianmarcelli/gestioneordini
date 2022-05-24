@@ -40,6 +40,12 @@ public class Categoria {
 	public Categoria() {
 	}
 
+	public Categoria(String descrizione, String codice) {
+		super();
+		this.descrizione = descrizione;
+		this.codice = codice;
+	}
+
 	public Categoria(Long id, String descrizione, String codice, Set<Articolo> articoli) {
 		super();
 		this.id = id;
