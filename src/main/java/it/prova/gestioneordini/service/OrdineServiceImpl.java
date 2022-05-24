@@ -120,4 +120,21 @@ public class OrdineServiceImpl implements OrdineService {
 		this.ordineDAO = ordineDAO;
 	}
 
+	@Override
+	public Ordine caricaSingoloElementoEagerArticoli(Long id) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			ordineDAO.setEntityManager(entityManager);
+
+			return ordineDAO.findByIdFetchingArticoli(id);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+	}
+
 }

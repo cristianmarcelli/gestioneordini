@@ -113,4 +113,21 @@ public class CategoriaServiceImpl implements CategoriaService {
 		this.categoriaDAO = categoriaDAO;
 	}
 
+	@Override
+	public Categoria caricaSingoloElementoEagerArticoli(Long id) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			categoriaDAO.setEntityManager(entityManager);
+
+			return categoriaDAO.findByIdFetchingArticoli(id);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+	}
+
 }

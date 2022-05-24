@@ -120,4 +120,21 @@ public class ArticoloServiceImpl implements ArticoloService {
 		this.articoloDAO = articoloDAO;
 	}
 
+	@Override
+	public Articolo caricaSingoloElementoEagerCategorie(Long id) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			articoloDAO.setEntityManager(entityManager);
+
+			return articoloDAO.findByIdFetchingCategorie(id);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+	}
+
 }

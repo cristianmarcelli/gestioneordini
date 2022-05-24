@@ -10,6 +10,8 @@ public interface ArticoloService {
 	public List<Articolo> listAll() throws Exception;
 
 	public Articolo caricaSingoloElemento(Long id) throws Exception;
+	
+	public Articolo caricaSingoloElementoEagerCategorie(Long id) throws Exception;
 
 	public void aggiorna(Articolo articoloInstance) throws Exception;
 
