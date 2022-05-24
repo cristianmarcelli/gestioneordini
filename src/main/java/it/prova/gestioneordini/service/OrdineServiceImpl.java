@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import it.prova.gestioneordini.dao.EntityManagerUtil;
 import it.prova.gestioneordini.dao.ordine.OrdineDAO;
+import it.prova.gestioneordini.exception.OrdineConArticoliAssociatiException;
 import it.prova.gestioneordini.model.Ordine;
 
 public class OrdineServiceImpl implements OrdineService {
@@ -95,6 +96,12 @@ public class OrdineServiceImpl implements OrdineService {
 			entityManager.getTransaction().begin();
 
 			ordineDAO.setEntityManager(entityManager);
+
+			Ordine ordineDaRimuovere = ordineDAO.findByIdFetchingArticoli(idOrdine);
+			if (!ordineDaRimuovere.getArticoli().isEmpty()) {
+				throw new OrdineConArticoliAssociatiException(
+						"Impossibile rimuovere ordine: ha degli articoli assegnati");
+			}
 
 			ordineDAO.delete(ordineDAO.get(idOrdine));
 
