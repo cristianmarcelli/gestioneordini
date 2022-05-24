@@ -1,5 +1,8 @@
 package it.prova.gestioneordini.dao.ordine;
 
-public interface OrdineDAO {
+import it.prova.gestioneordini.dao.IBaseDAO;
+import it.prova.gestioneordini.model.Ordine;
+
+public interface OrdineDAO extends IBaseDAO<Ordine> {
 
 }
