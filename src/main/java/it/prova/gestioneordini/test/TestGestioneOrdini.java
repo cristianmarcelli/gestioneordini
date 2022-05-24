@@ -30,7 +30,9 @@ public class TestGestioneOrdini {
 			System.out.println(
 					"*************************************************************************************************");
 
-			testInserimentoNuovoOrdine(ordineServiceInstance);
+//			testInserimentoNuovoOrdine(ordineServiceInstance);
+			
+			testAggiornaOrdine(ordineServiceInstance);
 			
 			
 			System.out.println(
@@ -60,6 +62,22 @@ public class TestGestioneOrdini {
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
 		if (ordineInstance.getId() == null)
 			throw new RuntimeException("testInserimentoNuovoArticolo fallito ");
+
+		System.out.println(".......testInserimentoNuovoOrdine fine: PASSED.............");
+	}
+	
+	private static void testAggiornaOrdine(OrdineService ordineServiceInstance) throws Exception {
+		System.out.println(".......testInserimentoNuovoOrdine inizio.............");
+
+		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("24/09/2019");
+		
+		Ordine ordineInstance = new Ordine("Valerio Ma", "Roma - Via Italia, 43", dataPubblicazioneOrdine);
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
+		if (ordineInstance.getId() == null)
+			throw new RuntimeException("testInserimentoNuovoArticolo fallito ");
+		
+		ordineInstance.setNomeDestinatario("Saverio Sa");
+		ordineServiceInstance.aggiorna(ordineInstance);
 
 		System.out.println(".......testInserimentoNuovoOrdine fine: PASSED.............");
 	}
