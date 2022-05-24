@@ -30,7 +30,7 @@ public class Categoria {
 	private String codice;
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "categorie")
-	private Set<Articolo> articoli = new HashSet<Articolo>();
+	private Set<Articolo> articoli = new HashSet<>();
 
 	@CreationTimestamp
 	private LocalDateTime createDateTime;

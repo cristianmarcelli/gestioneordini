@@ -31,11 +31,9 @@ public class Ordine {
 	private String indirizzo;
 	@Column(name = "datapubblicazione")
 	private Date dataPubblicazione;
-	@Column(name = "articoli")
-	private Set<Articolo> articoli = new HashSet<Articolo>();
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ordine")
-	private Set<Articolo> abitanti = new HashSet<Articolo>();
+	private Set<Articolo> articoli = new HashSet<>();
 
 	@CreationTimestamp
 	private LocalDateTime createDateTime;
@@ -46,25 +44,13 @@ public class Ordine {
 	}
 
 	public Ordine(Long id, String nomeDestinatario, String indirizzo, Date dataPubblicazione, Set<Articolo> articoli,
-			Set<Articolo> abitanti) {
+			LocalDateTime createDateTime, LocalDateTime updateDateTime) {
 		super();
 		this.id = id;
 		this.nomeDestinatario = nomeDestinatario;
 		this.indirizzo = indirizzo;
 		this.dataPubblicazione = dataPubblicazione;
 		this.articoli = articoli;
-		this.abitanti = abitanti;
-	}
-
-	public Ordine(Long id, String nomeDestinatario, String indirizzo, Date dataPubblicazione, Set<Articolo> articoli,
-			Set<Articolo> abitanti, LocalDateTime createDateTime, LocalDateTime updateDateTime) {
-		super();
-		this.id = id;
-		this.nomeDestinatario = nomeDestinatario;
-		this.indirizzo = indirizzo;
-		this.dataPubblicazione = dataPubblicazione;
-		this.articoli = articoli;
-		this.abitanti = abitanti;
 		this.createDateTime = createDateTime;
 		this.updateDateTime = updateDateTime;
 	}
@@ -109,14 +95,6 @@ public class Ordine {
 		this.articoli = articoli;
 	}
 
-	public Set<Articolo> getAbitanti() {
-		return abitanti;
-	}
-
-	public void setAbitanti(Set<Articolo> abitanti) {
-		this.abitanti = abitanti;
-	}
-
 	public LocalDateTime getCreateDateTime() {
 		return createDateTime;
 	}
@@ -136,8 +114,8 @@ public class Ordine {
 	@Override
 	public String toString() {
 		return "Ordine [id=" + id + ", nomeDestinatario=" + nomeDestinatario + ", indirizzo=" + indirizzo
-				+ ", dataPubblicazione=" + dataPubblicazione + ", articoli=" + articoli + ", abitanti=" + abitanti
-				+ ", createDateTime=" + createDateTime + ", updateDateTime=" + updateDateTime + "]";
+				+ ", dataPubblicazione=" + dataPubblicazione + ", articoli=" + articoli + ", createDateTime="
+				+ createDateTime + ", updateDateTime=" + updateDateTime + "]";
 	}
 
 }
