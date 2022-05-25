@@ -8,6 +8,7 @@ import it.prova.gestioneordini.dao.EntityManagerUtil;
 import it.prova.gestioneordini.dao.ordine.OrdineDAO;
 import it.prova.gestioneordini.exception.OrdineConArticoliAssociatiException;
 import it.prova.gestioneordini.model.Articolo;
+import it.prova.gestioneordini.model.Categoria;
 import it.prova.gestioneordini.model.Ordine;
 
 public class OrdineServiceImpl implements OrdineService {
@@ -130,6 +131,22 @@ public class OrdineServiceImpl implements OrdineService {
 
 			return ordineDAO.findByIdFetchingArticoli(id);
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+	}
+
+	@Override
+	public List<Ordine> cercaOrdineTramiteCategoria(Categoria categoriaInput) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			ordineDAO.setEntityManager(entityManager);
+
+			return ordineDAO.findOrdiniByCategoria(categoriaInput);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

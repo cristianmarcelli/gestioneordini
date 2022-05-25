@@ -38,14 +38,15 @@ public class TestGestioneOrdini {
 
 //			testAggiornaOrdine(ordineServiceInstance);
 
-			// *******************************************
 //			testCollegaArticoloAdOrdine(ordineServiceInstance, articoloServiceInstance);
-			// *******************************************
+
 //			testRimozioneOrdine(ordineServiceInstance);
-			// *******************************************
 
-			testRimuoviArticoloDaOrdine(ordineServiceInstance, articoloServiceInstance);
+//			testRimuoviArticoloDaOrdine(ordineServiceInstance, articoloServiceInstance);
 
+			testAggiungiArticoloACategoria(articoloServiceInstance, categoriaServiceInstance, ordineServiceInstance);
+
+//			testAggiungiCategoriaAdArticolo(categoriaServiceInstance, articoloServiceInstance);
 
 			System.out.println(
 					"****************************** fine batteria di test ********************************************");
@@ -95,12 +96,15 @@ public class TestGestioneOrdini {
 	}
 
 	private static void testRimozioneOrdine(OrdineService ordineServiceInstance) throws Exception {
+		System.out.println(".......testRimozioneOrdine inizio.............");
+
 		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("17/01/2015");
 
 		Ordine ordineInstance = new Ordine("Annamaria Frasco", "Milano - Via dei baveri, 8", dataPubblicazioneOrdine);
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
 
 		ordineServiceInstance.rimuovi(ordineInstance.getId());
+		System.out.println(".......testRimozioneOrdine fine: PASSED.............");
 	}
 
 	private static void testCollegaArticoloAdOrdine(OrdineService ordineServiceInstance,
@@ -130,11 +134,36 @@ public class TestGestioneOrdini {
 
 	private static void testRimuoviArticoloDaOrdine(OrdineService ordineServiceInstance,
 			ArticoloService articoloServiceInstance) throws Exception {
+		System.out.println(".......testRimuoviArticoloDaOrdine inizio.............");
 
 		Articolo articoloDaRimuovere = articoloServiceInstance.listAll().get(0);
 
 		articoloServiceInstance.rimuovi(articoloDaRimuovere.getId());
+		System.out.println(".......testRimuoviArticoloDaOrdine fine: PASSED .............");
+	}
 
+	private static void testAggiungiArticoloACategoria(ArticoloService articoloServiceInstance,
+			CategoriaService categoriaServiceInstance, OrdineService ordineServiceInstance) throws Exception {
+		
+		// Creo ordine
+		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("17/01/2019");
+
+		Ordine ordineInstance = new Ordine("Alessio Franchetti", "Modena - Via Albero, 87", dataPubblicazioneOrdine);
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
+
+		// Creo la categoria
+		Categoria categoriaInstance = new Categoria("Intr", "intrattenimento");
+
+		// Creo il mio articolo
+		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/2014");
+		Articolo articoloDaAggiungere = new Articolo("fumetto vintage", "GFK7238", 56, dataInserimentoArticolo);
+
+		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
+		articoloDaAggiungere.setOrdine(ordineInstance);
+		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+
+		// collego
+		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
 	}
 
 

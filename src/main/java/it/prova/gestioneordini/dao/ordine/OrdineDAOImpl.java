@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import it.prova.gestioneordini.model.Categoria;
 import it.prova.gestioneordini.model.Ordine;
 
 public class OrdineDAOImpl implements OrdineDAO {
@@ -56,6 +57,14 @@ public class OrdineDAOImpl implements OrdineDAO {
 				.createQuery("select o FROM Ordine o left join fetch o.articoli a where o.id = :idOrdine", Ordine.class);
 		query.setParameter("idOrdine", id);
 		return query.getResultList().stream().findFirst().orElse(null);
+	}
+
+	@Override
+	public List<Ordine> findOrdiniByCategoria(Categoria categoriaInput) {
+		TypedQuery<Ordine> query = entityManager
+				.createQuery("select o from Ordine o join o.categorie c where c.id = :idCategoria", Ordine.class);
+		query.setParameter("idCategoria", categoriaInput);
+		return query.getResultList();
 	}
 
 }
