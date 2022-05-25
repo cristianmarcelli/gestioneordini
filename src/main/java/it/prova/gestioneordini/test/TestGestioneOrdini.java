@@ -39,14 +39,13 @@ public class TestGestioneOrdini {
 //			testAggiornaOrdine(ordineServiceInstance);
 
 			// *******************************************
-			testCollegaArticoloAdOrdine(ordineServiceInstance, articoloServiceInstance);
+//			testCollegaArticoloAdOrdine(ordineServiceInstance, articoloServiceInstance);
 			// *******************************************
 //			testRimozioneOrdine(ordineServiceInstance);
 			// *******************************************
-//			testAggiungiArticoloACategoria(articoloServiceInstance, categoriaServiceInstance);
-			// *******************************************
 
-//			testAggiungiCategoriaAdArticolo(categoriaServiceInstance, articoloServiceInstance);
+			testRimuoviArticoloDaOrdine(ordineServiceInstance, articoloServiceInstance);
+
 
 			System.out.println(
 					"****************************** fine batteria di test ********************************************");
@@ -129,36 +128,15 @@ public class TestGestioneOrdini {
 		System.out.println(".......testAggiungiArticoloAdOrdine fine.............");
 	}
 
-//	private static void testRimuoviArticoloDaOrdine(OrdineService ordineServiceInstance,
-//			ArticoloService articoloServiceInstance) throws Exception {
-//
-//	}
+	private static void testRimuoviArticoloDaOrdine(OrdineService ordineServiceInstance,
+			ArticoloService articoloServiceInstance) throws Exception {
 
-//	private static void testAggiungiArticoloACategoria(ArticoloService articoloServiceInstance, CategoriaService categoriaServiceInstance) throws Exception {
-//		// Inserisco il mio articolo
-//		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/2014");
-//
-//		Articolo articoloDaAggiungere = new Articolo("fumetto vintage", "GFK7238", 56, dataInserimentoArticolo);
-//		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
-//		
-//		Categoria categoriaInstance = new Categoria("Intr", "intrattenimento");
-//		
-//		//collego
-//		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
-//	}
+		Articolo articoloDaRimuovere = articoloServiceInstance.listAll().get(0);
 
-//	private static void testAggiungiCategoriaAdArticolo(CategoriaService categoriaServiceInstance,
-//			ArticoloService articoloServiceInstance) throws Exception {
-//		// Inserisco il mio articolo
-//		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/2014");
-//
-//		Articolo articoloDaAggiungere = new Articolo("fumetto vintage", "GFK7238", 56, dataInserimentoArticolo);
-//		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
-//
-//		Categoria categoriaInstance = new Categoria("Intr", "intrattenimento");
-//
-//		// collego
-//		articoloServiceInstance.aggiungiCategoria(articoloDaAggiungere, categoriaInstance);
-//	}
+		articoloServiceInstance.rimuovi(articoloDaRimuovere.getId());
+
+	}
+
+
 
 }
