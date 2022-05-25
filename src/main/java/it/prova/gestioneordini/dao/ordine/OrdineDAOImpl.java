@@ -71,20 +71,12 @@ public class OrdineDAOImpl implements OrdineDAO {
 		return queryDaRitornare.getResultList();
 	}
 
-//	@Override
-//	public Ordine findOrdinePiuRecente(Categoria categoriaInput) {
-//		TypedQuery<Ordine> query = entityManager.createQuery(
-//				"select o from Ordine o join o.articoli a join a.categorie c where c.id = :idCategoria", Ordine.class);
-//		query.setParameter("idCategoria", categoriaInput.getId());
-//		return query.getResultList().stream().findFirst().orElse(null);
-//	}
-	
+	@Override
 	public Ordine findOrdinePiuRecente(Categoria categoriaInput) {
-		TypedQuery<Ordine> query = entityManager
-				.createQuery("select o from Ordine o join o.articoli a join a.categorie c where o.dataSpedizione = (select max(o.dataSpedizione) from Ordine o) and c.id = ?1", Ordine.class)
-				.setParameter(1, categoriaInput.getId());
-
-		return query.getResultStream().findFirst().orElse(null);
+		TypedQuery<Ordine> query = entityManager.createQuery(
+				"select o from Ordine o join o.articoli a join a.categorie c where c.id = ?1 order by o.dataSpedizione desc",
+				Ordine.class);
+		return query.setParameter(1, categoriaInput.getId()).getResultList().get(0);
 	}
 
 	@Override

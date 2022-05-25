@@ -53,11 +53,13 @@ public class TestGestioneOrdini {
 
 			testCercaOrdiniTramiteCategoria(categoriaServiceInstance, ordineServiceInstance, articoloServiceInstance);
 
-			testCercaTutteLeCategorieDegliArticoli(categoriaServiceInstance, ordineServiceInstance, articoloServiceInstance);
+			testCercaTutteLeCategorieDegliArticoli(categoriaServiceInstance, ordineServiceInstance,
+					articoloServiceInstance);
 
-			testSommaPrezziDiArticoliTramiteCategoria(articoloServiceInstance, categoriaServiceInstance, ordineServiceInstance);
+			testSommaPrezziDiArticoliTramiteCategoria(articoloServiceInstance, categoriaServiceInstance,
+					ordineServiceInstance);
 
-//			testCercaOrdinePiuRecente(ordineServiceInstance, categoriaServiceInstance, articoloServiceInstance);
+			testCercaOrdinePiuRecente(ordineServiceInstance, categoriaServiceInstance, articoloServiceInstance);
 
 			testCercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue(ordineServiceInstance,
 					categoriaServiceInstance, articoloServiceInstance);
@@ -297,7 +299,6 @@ public class TestGestioneOrdini {
 		// collego
 		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
 
-
 		System.out.println(categoriaServiceInstance.cercaTutteLeCategorieDegliArticoli(ordineInstance));
 
 		System.out.println(".......testCercaOrdiniTramiteCategoria fine: PASSED.............");
@@ -326,40 +327,41 @@ public class TestGestioneOrdini {
 		// collego
 		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
 
-
 		System.out.println(articoloServiceInstance.sommaDeiPrezziDiArticoliTramiteCategoria(categoriaInstance));
 
 		System.out.println(".......testSommaPrezziDiArticoliTramiteCategoria fine: PASSED.............");
 	}
 
-//	public static void testCercaOrdinePiuRecente(OrdineService ordineServiceInstance,
-//			CategoriaService categoriaServiceInstance, ArticoloService articoloServiceInstance) throws Exception {
-//		System.out.println(".......testCercaOrdinePiuRecente inizio.............");
-//
-//		// Creo ordine
-//		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2022");
-//
-//		Ordine ordineInstance = new Ordine("Carlo Baronetti", "Perugia - Via Firenze, 22", dataSpedizioneOrdine);
-//		ordineServiceInstance.inserisciNuovo(ordineInstance);
-//
-//		// Creo la categoria
-//		Categoria categoriaInstance = new Categoria("Intrattenimento videoludico", "HNOASDFHOSA");
-//
-//		// Creo il mio articolo
-//		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/2022");
-//		Articolo articoloDaAggiungere = new Articolo("Videogioco sparatutto", "NVKDM88", 80, dataInserimentoArticolo);
-//
-//		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
-//		articoloDaAggiungere.setOrdine(ordineInstance);
-//		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
-//
-//		// collego
-//		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
-//
-//		System.out.println(ordineServiceInstance.cercaOrdinePiuRecente(categoriaInstance));
-//
-//		System.out.println(".......testCercaOrdinePiuRecente fine: PASSED.............");
-//	}
+	public static void testCercaOrdinePiuRecente(OrdineService ordineServiceInstance,
+			CategoriaService categoriaServiceInstance, ArticoloService articoloServiceInstance) throws Exception {
+		System.out.println(".......testCercaOrdinePiuRecente inizio.............");
+
+		Categoria categoriaInstance = new Categoria("Sport", "SPORTSSSS");
+		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
+
+		if (categoriaInstance.getId() == null)
+			throw new RuntimeException("test fallito, categoria non inserita");
+
+		Date dataSpedizione = new SimpleDateFormat("dd-MM-yyyy").parse("23-05-2020");
+		Ordine ordineInstance = new Ordine("Giampiero Sattacamotti", "Milano - Via Orioni, 56", dataSpedizione);
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
+
+		if (ordineInstance.getId() == null)
+			throw new RuntimeException("Test fallito, ordine non inserito");
+
+		Articolo articolo1 = new Articolo("Pallone da calcio del real madrid", "CALCCCC", 30,
+				new SimpleDateFormat("dd-MM-yyyy").parse("14-08-2017"));
+		articolo1.setOrdine(ordineInstance);
+		articoloServiceInstance.inserisciNuovo(articolo1);
+
+		articoloServiceInstance.aggiungiCategoria(articolo1, categoriaInstance);
+
+		Ordine ordineConDataSpedPiùRecente = ordineServiceInstance.cercaOrdinePiuRecente(categoriaInstance);
+
+		System.out.println(ordineConDataSpedPiùRecente.getDataSpedizione());
+
+		System.out.println("...........testOrdineConDataSpedizionePiùRecente PASSED.....");
+	}
 
 	public static void testCercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue(
 			OrdineService ordineServiceInstance, CategoriaService categoriaServiceInstance,

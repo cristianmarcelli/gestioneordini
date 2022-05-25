@@ -109,7 +109,7 @@ public class Ordine {
 		return dataSpedizione;
 	}
 
-	public void setDataSpedizione(Date dataPubdataSpedizioneblicazione) {
+	public void setDataSpedizione(Date dataSpedizione) {
 		this.dataSpedizione = dataSpedizione;
 	}
 
