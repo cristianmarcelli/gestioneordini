@@ -61,14 +61,12 @@ public class ArticoloDAOImpl implements ArticoloDAO {
 	}
 
 	@Override
-	public int countQuantiPrezziDegliArticoli(Categoria categoriaInput) {
+	public int sumPrezziDegliArticoli(Categoria categoriaInput) {
 		Query queryDaRitornare = entityManager.createNativeQuery(
-				"select count(a.prezzosingolo)\r\n"
-				+ "from Ordine o, Articolo a, Categoria c, articolo_categoria x\r\n"
-				+ "where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and c.id = ?1");
+				"select sum(a.prezzosingolo) from Ordine o, Articolo a, Categoria c, articolo_categoria x where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and c.id = ?1");
 		queryDaRitornare.setParameter(1, categoriaInput);
-		
-		return queryDaRitornare.getResultList().size();
+
+		return (int) queryDaRitornare.getSingleResult();
 	}
 
 }

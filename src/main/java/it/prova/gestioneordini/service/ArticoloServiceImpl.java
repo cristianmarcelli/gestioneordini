@@ -162,13 +162,13 @@ public class ArticoloServiceImpl implements ArticoloService {
 	}
 
 	@Override
-	public int contaQuantiPrezziDiArticoliTramiteCategoria(Categoria categoriaInput) throws Exception {
+	public int sommaDeiPrezziDiArticoliTramiteCategoria(Categoria categoriaInput) throws Exception {
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
 			articoloDAO.setEntityManager(entityManager);
 
-			return articoloDAO.countQuantiPrezziDegliArticoli(categoriaInput);
+			return articoloDAO.sumPrezziDegliArticoli(categoriaInput);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

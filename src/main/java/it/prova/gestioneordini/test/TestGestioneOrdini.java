@@ -53,8 +53,10 @@ public class TestGestioneOrdini {
 //			testCercaOrdiniTramiteCategoria(categoriaServiceInstance, ordineServiceInstance);
 
 //			testCercaTutteLeCategorieDegliArticoli(categoriaServiceInstance, ordineServiceInstance);
-			
-			testContaQuantiPrezziDiArticoliTramiteCategoria(articoloServiceInstance, categoriaServiceInstance);
+
+			testSommaPrezziDiArticoliTramiteCategoria(articoloServiceInstance, categoriaServiceInstance);
+
+//			testCercaOrdinePiuRecente(ordineServiceInstance, categoriaServiceInstance, articoloServiceInstance);
 
 //			System.out.println(
 //					"****************************** fine batteria di test ********************************************");
@@ -144,9 +146,14 @@ public class TestGestioneOrdini {
 			ArticoloService articoloServiceInstance) throws Exception {
 		System.out.println(".......testRimuoviArticoloDaOrdine inizio.............");
 
-		Articolo articoloDaRimuovere = articoloServiceInstance.listAll().get(0);
+		// Mi prendo l articolo creato prima
+		Articolo daDissociare = articoloServiceInstance.caricaSingoloElemento(1L);
 
-		articoloServiceInstance.rimuovi(articoloDaRimuovere.getId());
+		// e l ordine creato prima e li dissocio
+		Ordine ordineMaster = ordineServiceInstance.caricaSingoloElemento(1L);
+
+		ordineServiceInstance.rimuoviArticoloDaOrdine(ordineMaster, daDissociare);
+
 		System.out.println(".......testRimuoviArticoloDaOrdine fine: PASSED .............");
 	}
 
@@ -222,7 +229,7 @@ public class TestGestioneOrdini {
 		Ordine ordineDaRicercare = ordineServiceInstance.listAll().get(18);
 
 		if (ordineDaRicercare.getId() == 0) {
-			throw new RuntimeException("Categoria non trovata");
+			throw new RuntimeException("Ordine non trovato");
 		}
 
 		System.out.println(categoriaServiceInstance.cercaTutteLeCategorieDegliArticoli(ordineDaRicercare));
@@ -230,9 +237,9 @@ public class TestGestioneOrdini {
 		System.out.println(".......testCercaOrdiniTramiteCategoria fine: PASSED.............");
 	}
 
-	public static void testContaQuantiPrezziDiArticoliTramiteCategoria(ArticoloService articoloServiceInstance,
+	public static void testSommaPrezziDiArticoliTramiteCategoria(ArticoloService articoloServiceInstance,
 			CategoriaService categoriaServiceInstance) throws Exception {
-		System.out.println(".......testCercaOrdiniTramiteCategoria inizio.............");
+		System.out.println(".......testSommaPrezziDiArticoliTramiteCategoria inizio.............");
 
 		// Creo la categoria
 		Categoria categoriaDaRicercare = categoriaServiceInstance.listAll().get(4);
@@ -241,11 +248,38 @@ public class TestGestioneOrdini {
 			throw new RuntimeException("Categoria non trovata");
 		}
 
-		System.out.println(articoloServiceInstance.contaQuantiPrezziDiArticoliTramiteCategoria(categoriaDaRicercare));
+		System.out.println(articoloServiceInstance.sommaDeiPrezziDiArticoliTramiteCategoria(categoriaDaRicercare));
 
-		System.out.println(".......testCercaOrdiniTramiteCategoria fine: PASSED.............");
+		System.out.println(".......testSommaPrezziDiArticoliTramiteCategoria fine: PASSED.............");
 	}
 
-//	contaQuantiPrezziDiArticoliTramiteCategoria
+	public static void testCercaOrdinePiuRecente(OrdineService ordineServiceInstance,
+			CategoriaService categoriaServiceInstance, ArticoloService articoloServiceInstance) throws Exception {
+		System.out.println(".......testCercaOrdinePiuRecente inizio.............");
+
+		// Creo ordine
+		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2018");
+
+		Ordine ordineInstance = new Ordine("Andrea Saleri", "Catanzaro - Via Roma, 76", dataPubblicazioneOrdine);
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
+
+		// Creo la categoria
+		Categoria categoriaInstance = new Categoria("Intr", "intrattenimento");
+
+		// Creo il mio articolo
+		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/2014");
+		Articolo articoloDaAggiungere = new Articolo("tastiera rgb", "BNDKL729", 26, dataInserimentoArticolo);
+
+		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
+		articoloDaAggiungere.setOrdine(ordineInstance);
+		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+
+		// collego
+		articoloServiceInstance.aggiungiCategoria(articoloDaAggiungere, categoriaInstance);
+
+		System.out.println(ordineServiceInstance.cercaOrdinePiuRecente(categoriaInstance));
+
+		System.out.println(".......testCercaOrdinePiuRecente fine: PASSED.............");
+	}
 
 }

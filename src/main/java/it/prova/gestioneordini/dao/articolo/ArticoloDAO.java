@@ -10,6 +10,6 @@ public interface ArticoloDAO extends IBaseDAO<Articolo> {
 
 	// Voglio la somma totale di tutti i prezzi degli articoli legati ad una data
 	// categoria in input
-	public int countQuantiPrezziDegliArticoli(Categoria categoriaInput);
+	public int sumPrezziDegliArticoli(Categoria categoriaInput);
 
 }

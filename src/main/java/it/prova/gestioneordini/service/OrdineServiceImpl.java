@@ -1,5 +1,6 @@
 package it.prova.gestioneordini.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -148,6 +149,45 @@ public class OrdineServiceImpl implements OrdineService {
 
 			return ordineDAO.findOrdiniByCategoria(categoriaInput);
 		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+	}
+
+	@Override
+	public Ordine cercaOrdinePiuRecente(Categoria categoriaInput) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			ordineDAO.setEntityManager(entityManager);
+
+			return ordineDAO.findOrdinePiuRecente(categoriaInput);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+	}
+
+	@Override
+	public void rimuoviArticoloDaOrdine(Ordine ordineInstance, Articolo articoloInstance) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			entityManager.getTransaction().begin();
+
+			ordineDAO.setEntityManager(entityManager);
+
+			ordineInstance = entityManager.merge(ordineInstance);
+			articoloInstance = entityManager.merge(articoloInstance);
+
+			ordineInstance.getArticoli().remove(articoloInstance);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
 			e.printStackTrace();
 			throw e;
 		} finally {

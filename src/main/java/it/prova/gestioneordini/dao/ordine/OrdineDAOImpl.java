@@ -1,5 +1,6 @@
 package it.prova.gestioneordini.dao.ordine;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -69,6 +70,17 @@ public class OrdineDAOImpl implements OrdineDAO {
 		queryDaRitornare.setParameter(1, categoriaInput);
 		
 		return queryDaRitornare.getResultList();
+	}
+
+	@Override
+	public Ordine findOrdinePiuRecente(Categoria categoriaInput) {
+		Query queryDaRitornare = entityManager.createNativeQuery(
+				"select max(o.datapubblicazione)\r\n"
+				+ "from Ordine o, Articolo a, Categoria c, articolo_categoria x\r\n"
+				+ "where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and c.id = 1?");
+		queryDaRitornare.setParameter(1, categoriaInput);
+		
+		return  (Ordine) queryDaRitornare.getSingleResult();
 	}
 
 }
