@@ -70,4 +70,12 @@ public class ArticoloDAOImpl implements ArticoloDAO {
 		return result.longValue();
 	}
 
+	@Override
+	public Long sumPrezziDegliArticoliConDestinatarioMarioRossi() {
+		Query q = entityManager.createNativeQuery(
+				"select sum(a.prezzosingolo) from articolo a inner join ordine o on a.ordine_id=o.id where o.nomedestinatario like 'Mario Rossi'");
+		BigDecimal result = (BigDecimal) q.getResultList().stream().findFirst().get();
+		return result.longValue();
+	}
+
 }

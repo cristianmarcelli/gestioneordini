@@ -11,5 +11,7 @@ public interface ArticoloDAO extends IBaseDAO<Articolo> {
 	// Voglio la somma totale di tutti i prezzi degli articoli legati ad una data
 	// categoria in input
 	public Long sumPrezziDegliArticoli(Categoria categoriaInput);
+	
+	public Long sumPrezziDegliArticoliConDestinatarioMarioRossi();
 
 }

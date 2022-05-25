@@ -63,8 +63,10 @@ public class TestGestioneOrdini {
 
 //			testCercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale(ordineServiceInstance, articoloServiceInstance,
 //					categoriaServiceInstance);
+
+//			testRimozioneOrdineConArticoliAssociati(ordineServiceInstance, articoloServiceInstance, categoriaServiceInstance);
 			
-			testRimozioneOrdineConArticoliAssociati(ordineServiceInstance, articoloServiceInstance, categoriaServiceInstance);
+			testSommaPrezziDegliArticoliConDestinatarioMarioRossi(ordineServiceInstance, articoloServiceInstance, categoriaServiceInstance);
 
 //			System.out.println(
 //					"****************************** fine batteria di test ********************************************");
@@ -130,24 +132,24 @@ public class TestGestioneOrdini {
 		System.out.println(".......testRimozioneOrdineConArticoliAssociati inizio.............");
 
 		// Creo ordine
-				Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2021");
+		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2021");
 
-				Ordine ordineInstance = new Ordine("Michele Bruni", "Napoli - Via Gambero, 12", dataPubblicazioneOrdine);
-				ordineServiceInstance.inserisciNuovo(ordineInstance);
+		Ordine ordineInstance = new Ordine("Michele Bruni", "Napoli - Via Gambero, 12", dataPubblicazioneOrdine);
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
 
-				// Creo la categoria
-				Categoria categoriaInstance = new Categoria("Svago", "JKFJASD99999999");
+		// Creo la categoria
+		Categoria categoriaInstance = new Categoria("Svago", "JKFJASD99999999");
 
-				// Creo il mio articolo
-				Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/2019");
-				Articolo articoloDaAggiungere = new Articolo("Pallone da calcio", "LLL909090", 12, dataInserimentoArticolo);
+		// Creo il mio articolo
+		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/2019");
+		Articolo articoloDaAggiungere = new Articolo("Pallone da calcio", "LLL909090", 12, dataInserimentoArticolo);
 
-				categoriaServiceInstance.inserisciNuovo(categoriaInstance);
-				articoloDaAggiungere.setOrdine(ordineInstance);
-				articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
+		articoloDaAggiungere.setOrdine(ordineInstance);
+		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
 
-				// collego
-				categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
+		// collego
+		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
 
 		ordineServiceInstance.rimuovi(ordineInstance.getId());
 		System.out.println(".......testRimozioneOrdineConArticoliAssociati fine: PASSED.............");
@@ -377,6 +379,40 @@ public class TestGestioneOrdini {
 
 		System.out.println(ordineServiceInstance.cercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale("NVK"));
 
+		System.out.println(".......testCercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale fine: PASSED.............");
+	}
+
+	public static void testSommaPrezziDegliArticoliConDestinatarioMarioRossi(OrdineService ordineServiceInstance,
+			ArticoloService articoloServiceInstance, CategoriaService categoriaServiceInstance) throws Exception {
+		System.out.println(".......testSommaPrezziDegliArticoliConDestinatarioMarioRossi inizio:.............");
+		// Creo ordine
+		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2021");
+
+		Ordine ordineInstance = new Ordine("Mario Rossi", "Otranto - Via Liguria, 54", dataPubblicazioneOrdine);
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
+
+		// Creo la categoria
+		Categoria categoriaInstance = new Categoria("Intrattenimento", "HHHH790");
+
+		// Creo il mio articolo
+		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/2021");
+		Articolo articoloDaAggiungere = new Articolo("Videogioco sparatutto", "NVKDM88", 80, dataInserimentoArticolo);
+		
+		Date dataInserimentoArticolo2 = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/2022");
+		Articolo articoloDaAggiungere2 = new Articolo("Modellino nave", "JDFL78", 50, dataInserimentoArticolo);
+
+		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
+		articoloDaAggiungere.setOrdine(ordineInstance);
+		articoloDaAggiungere2.setOrdine(ordineInstance);
+		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere2);
+
+		// collego
+		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
+		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere2);
+		
+		System.out.println(articoloServiceInstance.sommaPrezziDegliArticoliConDestinatarioMarioRossi());
+		
 		System.out.println(".......testCercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale fine: PASSED.............");
 	}
 

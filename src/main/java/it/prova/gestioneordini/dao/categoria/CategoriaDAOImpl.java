@@ -72,7 +72,7 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 
 	@Override
 	public List<String> findAllCodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue() {
-		TypedQuery<String> query = entityManager.createQuery("select c.codice FROM Ordine o join o.articoli a join a.categorie c where o.dataPubblicazione like '2022-02%'", String.class);
+		TypedQuery<String> query = entityManager.createQuery("select distinct c.codice FROM Ordine o join o.articoli a join a.categorie c where o.dataPubblicazione like '2022-02%'", String.class);
 		return query.getResultList();
 	}
 
