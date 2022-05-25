@@ -71,18 +71,26 @@ public class OrdineDAOImpl implements OrdineDAO {
 		return queryDaRitornare.getResultList();
 	}
 
-	@Override
+//	@Override
+//	public Ordine findOrdinePiuRecente(Categoria categoriaInput) {
+//		TypedQuery<Ordine> query = entityManager.createQuery(
+//				"select o from Ordine o join o.articoli a join a.categorie c where c.id = :idCategoria", Ordine.class);
+//		query.setParameter("idCategoria", categoriaInput.getId());
+//		return query.getResultList().stream().findFirst().orElse(null);
+//	}
+	
 	public Ordine findOrdinePiuRecente(Categoria categoriaInput) {
-		TypedQuery<Ordine> query = entityManager.createQuery(
-				"select o from Ordine o join o.articoli a join a.categorie c where c.id = :idCategoria", Ordine.class);
-		query.setParameter("idCategoria", categoriaInput.getId());
-		return query.getSingleResult();
+		TypedQuery<Ordine> query = entityManager
+				.createQuery("select o from Ordine o join o.articoli a join a.categorie c where o.dataSpedizione = (select max(o.dataSpedizione) from Ordine o) and c.id = ?1", Ordine.class)
+				.setParameter(1, categoriaInput.getId());
 
+		return query.getResultStream().findFirst().orElse(null);
 	}
 
 	@Override
 	public List<String> findAllIndirizziDiOrdiniConCheckNumeroSeriale(String numeroSerialeInput) {
-		TypedQuery<String> query = entityManager.createQuery("select o.indirizzo FROM Ordine o join o.articoli a where a.numeroSeriale like ?1", String.class);
+		TypedQuery<String> query = entityManager.createQuery(
+				"select o.indirizzo FROM Ordine o join o.articoli a where a.numeroSeriale like ?1", String.class);
 		query.setParameter(1, "%" + numeroSerialeInput + "%");
 		return query.getResultList();
 	}

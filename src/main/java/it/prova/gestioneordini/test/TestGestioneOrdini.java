@@ -3,6 +3,7 @@ package it.prova.gestioneordini.test;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,57 +27,59 @@ public class TestGestioneOrdini {
 
 		try {
 
-//			System.out.println("In tabella Ordine ci sono " + ordineServiceInstance.listAll().size() + " elementi.");
-//			System.out
-//					.println("In tabella Articolo ci sono " + articoloServiceInstance.listAll().size() + " elementi.");
-//			System.out.println(
-//					"In tabella Categoria ci sono " + categoriaServiceInstance.listAll().size() + " elementi.");
-//			System.out.println(
-//					"**************************** inizio batteria di test ********************************************");
-//			System.out.println(
-//					"*************************************************************************************************");
+			System.out.println("In tabella Ordine ci sono " + ordineServiceInstance.listAll().size() + " elementi.");
+			System.out
+					.println("In tabella Articolo ci sono " + articoloServiceInstance.listAll().size() + " elementi.");
+			System.out.println(
+					"In tabella Categoria ci sono " + categoriaServiceInstance.listAll().size() + " elementi.");
+			System.out.println(
+					"**************************** inizio batteria di test ********************************************");
+			System.out.println(
+					"*************************************************************************************************");
 
-//			testInserimentoNuovoOrdine(ordineServiceInstance);
+			testInserimentoNuovoOrdine(ordineServiceInstance);
 
-//			testAggiornaOrdine(ordineServiceInstance);
+			testAggiornaOrdine(ordineServiceInstance);
 
-//			testCollegaArticoloAdOrdine(ordineServiceInstance, articoloServiceInstance);
+			testCollegaArticoloAdOrdine(ordineServiceInstance, articoloServiceInstance);
 
-//			testRimozioneOrdine(ordineServiceInstance);
+			testRimozioneOrdine(ordineServiceInstance);
 
-//			testRimuoviArticoloDaOrdine(ordineServiceInstance, articoloServiceInstance);
+			testRimuoviArticoloDaOrdine(ordineServiceInstance, articoloServiceInstance);
 
-//			testAggiungiArticoloACategoria(articoloServiceInstance, categoriaServiceInstance, ordineServiceInstance);
+			testAggiungiArticoloACategoria(articoloServiceInstance, categoriaServiceInstance, ordineServiceInstance);
 
-//			testAggiungiCategoriaAdArticolo(categoriaServiceInstance, articoloServiceInstance, ordineServiceInstance);
+			testAggiungiCategoriaAdArticolo(categoriaServiceInstance, articoloServiceInstance, ordineServiceInstance);
 
-//			testCercaOrdiniTramiteCategoria(categoriaServiceInstance, ordineServiceInstance);
+			testCercaOrdiniTramiteCategoria(categoriaServiceInstance, ordineServiceInstance, articoloServiceInstance);
 
-//			testCercaTutteLeCategorieDegliArticoli(categoriaServiceInstance, ordineServiceInstance);
+			testCercaTutteLeCategorieDegliArticoli(categoriaServiceInstance, ordineServiceInstance, articoloServiceInstance);
 
-//			testSommaPrezziDiArticoliTramiteCategoria(articoloServiceInstance, categoriaServiceInstance);
+			testSommaPrezziDiArticoliTramiteCategoria(articoloServiceInstance, categoriaServiceInstance, ordineServiceInstance);
 
 //			testCercaOrdinePiuRecente(ordineServiceInstance, categoriaServiceInstance, articoloServiceInstance);
 
-//			testCercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue(ordineServiceInstance,
-//					categoriaServiceInstance, articoloServiceInstance);
+			testCercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue(ordineServiceInstance,
+					categoriaServiceInstance, articoloServiceInstance);
 
-//			testCercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale(ordineServiceInstance, articoloServiceInstance,
+			testCercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale(ordineServiceInstance, articoloServiceInstance,
+					categoriaServiceInstance);
+
+//			testRimozioneOrdineConArticoliAssociati(ordineServiceInstance, articoloServiceInstance,
 //					categoriaServiceInstance);
 
-//			testRimozioneOrdineConArticoliAssociati(ordineServiceInstance, articoloServiceInstance, categoriaServiceInstance);
-			
-			testSommaPrezziDegliArticoliConDestinatarioMarioRossi(ordineServiceInstance, articoloServiceInstance, categoriaServiceInstance);
+			testSommaPrezziDegliArticoliConDestinatarioMarioRossi(ordineServiceInstance, articoloServiceInstance,
+					categoriaServiceInstance);
 
-//			System.out.println(
-//					"****************************** fine batteria di test ********************************************");
-//			System.out.println(
-//					"*************************************************************************************************");
-//			System.out.println("In tabella Ordine ci sono " + ordineServiceInstance.listAll().size() + " elementi.");
-//			System.out
-//					.println("In tabella Articolo ci sono " + articoloServiceInstance.listAll().size() + " elementi.");
-//			System.out.println(
-//					"In tabella Categoria ci sono " + categoriaServiceInstance.listAll().size() + " elementi.");
+			System.out.println(
+					"****************************** fine batteria di test ********************************************");
+			System.out.println(
+					"*************************************************************************************************");
+			System.out.println("In tabella Ordine ci sono " + ordineServiceInstance.listAll().size() + " elementi.");
+			System.out
+					.println("In tabella Articolo ci sono " + articoloServiceInstance.listAll().size() + " elementi.");
+			System.out.println(
+					"In tabella Categoria ci sono " + categoriaServiceInstance.listAll().size() + " elementi.");
 
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -89,9 +92,9 @@ public class TestGestioneOrdini {
 	private static void testInserimentoNuovoOrdine(OrdineService ordineServiceInstance) throws Exception {
 		System.out.println(".......testInserimentoNuovoOrdine inizio.............");
 
-		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("24/09/2019");
+		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("24/09/2019");
 
-		Ordine ordineInstance = new Ordine("Valerio Ma", "Roma - Via Italia, 43", dataPubblicazioneOrdine);
+		Ordine ordineInstance = new Ordine("Valerio Ma", "Roma - Via Italia, 43", dataSpedizioneOrdine);
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
 		if (ordineInstance.getId() == null)
 			throw new RuntimeException("testInserimentoNuovoArticolo fallito ");
@@ -102,9 +105,9 @@ public class TestGestioneOrdini {
 	private static void testAggiornaOrdine(OrdineService ordineServiceInstance) throws Exception {
 		System.out.println(".......testInserimentoNuovoOrdine inizio.............");
 
-		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("24/09/2019");
+		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("24/09/2019");
 
-		Ordine ordineInstance = new Ordine("Valerio Ma", "Roma - Via Italia, 43", dataPubblicazioneOrdine);
+		Ordine ordineInstance = new Ordine("Valerio Ma", "Roma - Via Italia, 43", dataSpedizioneOrdine);
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
 		if (ordineInstance.getId() == null)
 			throw new RuntimeException("testInserimentoNuovoArticolo fallito ");
@@ -118,9 +121,9 @@ public class TestGestioneOrdini {
 	private static void testRimozioneOrdine(OrdineService ordineServiceInstance) throws Exception {
 		System.out.println(".......testRimozioneOrdine inizio.............");
 
-		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("17/01/2015");
+		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("17/01/2015");
 
-		Ordine ordineInstance = new Ordine("Annamaria Frasco", "Milano - Via dei baveri, 8", dataPubblicazioneOrdine);
+		Ordine ordineInstance = new Ordine("Annamaria Frasco", "Milano - Via dei baveri, 8", dataSpedizioneOrdine);
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
 
 		ordineServiceInstance.rimuovi(ordineInstance.getId());
@@ -132,9 +135,9 @@ public class TestGestioneOrdini {
 		System.out.println(".......testRimozioneOrdineConArticoliAssociati inizio.............");
 
 		// Creo ordine
-		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2021");
+		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2021");
 
-		Ordine ordineInstance = new Ordine("Michele Bruni", "Napoli - Via Gambero, 12", dataPubblicazioneOrdine);
+		Ordine ordineInstance = new Ordine("Michele Bruni", "Napoli - Via Gambero, 12", dataSpedizioneOrdine);
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
 
 		// Creo la categoria
@@ -160,9 +163,9 @@ public class TestGestioneOrdini {
 		System.out.println(".......testAggiungiArticoloAdOrdine inizio.............");
 
 		// Creo ordine
-		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("17/01/2019");
+		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("17/01/2019");
 
-		Ordine ordineInstance = new Ordine("Annalisa Birotti", "Firenze - Via Libia, 52", dataPubblicazioneOrdine);
+		Ordine ordineInstance = new Ordine("Annalisa Birotti", "Firenze - Via Libia, 52", dataSpedizioneOrdine);
 
 		// Creo articolo
 		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/2017");
@@ -199,9 +202,9 @@ public class TestGestioneOrdini {
 			CategoriaService categoriaServiceInstance, OrdineService ordineServiceInstance) throws Exception {
 
 		// Creo ordine
-		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("17/01/2019");
+		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("17/01/2019");
 
-		Ordine ordineInstance = new Ordine("Alessio Franchetti", "Modena - Via Albero, 87", dataPubblicazioneOrdine);
+		Ordine ordineInstance = new Ordine("Alessio Franchetti", "Modena - Via Albero, 87", dataSpedizioneOrdine);
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
 
 		// Creo la categoria
@@ -222,10 +225,10 @@ public class TestGestioneOrdini {
 	private static void testAggiungiCategoriaAdArticolo(CategoriaService categoriaServiceInstance,
 			ArticoloService articoloServiceInstance, OrdineService ordineServiceInstance) throws Exception {
 		// Creo ordine
-		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2018");
+		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2018");
 
 		Ordine ordineInstance = new Ordine("Brando Balenziani", "Potenza - Via Carlo Alberti, 90",
-				dataPubblicazioneOrdine);
+				dataSpedizioneOrdine);
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
 
 		// Creo la categoria
@@ -244,49 +247,87 @@ public class TestGestioneOrdini {
 	}
 
 	public static void testCercaOrdiniTramiteCategoria(CategoriaService categoriaServiceInstance,
-			OrdineService ordineServiceInstance) throws Exception {
+			OrdineService ordineServiceInstance, ArticoloService articoloServiceInstance) throws Exception {
 		System.out.println(".......testCercaOrdiniTramiteCategoria inizio.............");
+		// Creo ordine
+		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("16/05/2018");
+
+		Ordine ordineInstance = new Ordine("Andrea Pirlotti", "Milano - Via Roma, 26", dataSpedizioneOrdine);
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
 
 		// Creo la categoria
-		Categoria categoriaDaRicercare = categoriaServiceInstance.listAll().get(4);
+		Categoria categoriaInstance = new Categoria("Svago", "HDFSAK");
 
-		if (categoriaDaRicercare.getId() == 0) {
-			throw new RuntimeException("Categoria non trovata");
-		}
+		// Creo il mio articolo
+		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/20");
+		Articolo articoloDaAggiungere = new Articolo("Mazza da baseball", "HFASJHA", 45, dataInserimentoArticolo);
 
-		System.out.println(ordineServiceInstance.cercaOrdiniTramiteCategoria(categoriaDaRicercare));
+		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
+		articoloDaAggiungere.setOrdine(ordineInstance);
+		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+
+		// collego
+		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
+
+		System.out.println(ordineServiceInstance.cercaOrdiniTramiteCategoria(categoriaInstance));
 
 		System.out.println(".......testCercaOrdiniTramiteCategoria fine: PASSED.............");
 	}
 
 	public static void testCercaTutteLeCategorieDegliArticoli(CategoriaService categoriaServiceInstance,
-			OrdineService ordineServiceInstance) throws Exception {
+			OrdineService ordineServiceInstance, ArticoloService articoloServiceInstance) throws Exception {
 		System.out.println(".......testCercaOrdiniTramiteCategoria inizio.............");
 
-		// Creo l'ordine
-		Ordine ordineDaRicercare = ordineServiceInstance.listAll().get(18);
+		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("16/05/2016");
 
-		if (ordineDaRicercare.getId() == 0) {
-			throw new RuntimeException("Ordine non trovato");
-		}
+		Ordine ordineInstance = new Ordine("Andrea Lamantia", "Catanzaro - Via Carloni, 67", dataSpedizioneOrdine);
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
 
-		System.out.println(categoriaServiceInstance.cercaTutteLeCategorieDegliArticoli(ordineDaRicercare));
+		// Creo la categoria
+		Categoria categoriaInstance = new Categoria("Vestiario", "JNOHAS");
+
+		// Creo il mio articolo
+		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/16");
+		Articolo articoloDaAggiungere = new Articolo("Maglia Hardrock", "JNASKAS", 20, dataInserimentoArticolo);
+
+		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
+		articoloDaAggiungere.setOrdine(ordineInstance);
+		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+
+		// collego
+		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
+
+
+		System.out.println(categoriaServiceInstance.cercaTutteLeCategorieDegliArticoli(ordineInstance));
 
 		System.out.println(".......testCercaOrdiniTramiteCategoria fine: PASSED.............");
 	}
 
 	public static void testSommaPrezziDiArticoliTramiteCategoria(ArticoloService articoloServiceInstance,
-			CategoriaService categoriaServiceInstance) throws Exception {
+			CategoriaService categoriaServiceInstance, OrdineService ordineServiceInstance) throws Exception {
 		System.out.println(".......testSommaPrezziDiArticoliTramiteCategoria inizio.............");
 
+		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("16/05/2017");
+
+		Ordine ordineInstance = new Ordine("Carla Solteroni", "Crotone - Via ballarento, 98", dataSpedizioneOrdine);
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
+
 		// Creo la categoria
-		Categoria categoriaDaRicercare = categoriaServiceInstance.listAll().get(4);
+		Categoria categoriaInstance = new Categoria("Vestiario", "HSDFSHD");
 
-		if (categoriaDaRicercare.getId() == 0) {
-			throw new RuntimeException("Categoria non trovata");
-		}
+		// Creo il mio articolo
+		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/17");
+		Articolo articoloDaAggiungere = new Articolo("Pantaloni HeM", "JHNIOASDFF", 20, dataInserimentoArticolo);
 
-		System.out.println(articoloServiceInstance.sommaDeiPrezziDiArticoliTramiteCategoria(categoriaDaRicercare));
+		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
+		articoloDaAggiungere.setOrdine(ordineInstance);
+		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+
+		// collego
+		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
+
+
+		System.out.println(articoloServiceInstance.sommaDeiPrezziDiArticoliTramiteCategoria(categoriaInstance));
 
 		System.out.println(".......testSommaPrezziDiArticoliTramiteCategoria fine: PASSED.............");
 	}
@@ -296,26 +337,26 @@ public class TestGestioneOrdini {
 //		System.out.println(".......testCercaOrdinePiuRecente inizio.............");
 //
 //		// Creo ordine
-//		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2018");
+//		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2022");
 //
-//		Ordine ordineInstance = new Ordine("Andrea Saleri", "Catanzaro - Via Roma, 76", dataPubblicazioneOrdine);
+//		Ordine ordineInstance = new Ordine("Carlo Baronetti", "Perugia - Via Firenze, 22", dataSpedizioneOrdine);
 //		ordineServiceInstance.inserisciNuovo(ordineInstance);
 //
 //		// Creo la categoria
-//		Categoria categoriaInstance = new Categoria("Intr", "intrattenimento");
+//		Categoria categoriaInstance = new Categoria("Intrattenimento videoludico", "HNOASDFHOSA");
 //
 //		// Creo il mio articolo
-//		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/2014");
-//		Articolo articoloDaAggiungere = new Articolo("tastiera rgb", "BNDKL729", 26, dataInserimentoArticolo);
+//		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/2022");
+//		Articolo articoloDaAggiungere = new Articolo("Videogioco sparatutto", "NVKDM88", 80, dataInserimentoArticolo);
 //
 //		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
 //		articoloDaAggiungere.setOrdine(ordineInstance);
 //		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
 //
 //		// collego
-//		articoloServiceInstance.aggiungiCategoria(articoloDaAggiungere, categoriaInstance);
+//		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
 //
-//		System.out.println(ordineServiceInstance.cercaOrdinePiuRecente(categoriaDaRicercare));
+//		System.out.println(ordineServiceInstance.cercaOrdinePiuRecente(categoriaInstance));
 //
 //		System.out.println(".......testCercaOrdinePiuRecente fine: PASSED.............");
 //	}
@@ -327,9 +368,9 @@ public class TestGestioneOrdini {
 				".......testCercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue inizio.............");
 
 		// Creo ordine
-		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2022");
+		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2022");
 
-		Ordine ordineInstance = new Ordine("Carlo Baronetti", "Perugia - Via Firenze, 22", dataPubblicazioneOrdine);
+		Ordine ordineInstance = new Ordine("Carlo Baronetti", "Perugia - Via Firenze, 22", dataSpedizioneOrdine);
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
 
 		// Creo la categoria
@@ -358,9 +399,9 @@ public class TestGestioneOrdini {
 		System.out.println(".......testCercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale inizio.............");
 
 		// Creo ordine
-		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2022");
+		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2022");
 
-		Ordine ordineInstance = new Ordine("Carlo Baronetti", "Perugia - Via Firenze, 22", dataPubblicazioneOrdine);
+		Ordine ordineInstance = new Ordine("Carlo Baronetti", "Perugia - Via Firenze, 22", dataSpedizioneOrdine);
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
 
 		// Creo la categoria
@@ -386,9 +427,9 @@ public class TestGestioneOrdini {
 			ArticoloService articoloServiceInstance, CategoriaService categoriaServiceInstance) throws Exception {
 		System.out.println(".......testSommaPrezziDegliArticoliConDestinatarioMarioRossi inizio:.............");
 		// Creo ordine
-		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2021");
+		Date dataSpedizioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2021");
 
-		Ordine ordineInstance = new Ordine("Mario Rossi", "Otranto - Via Liguria, 54", dataPubblicazioneOrdine);
+		Ordine ordineInstance = new Ordine("Mario Rossi", "Otranto - Via Liguria, 54", dataSpedizioneOrdine);
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
 
 		// Creo la categoria
@@ -397,7 +438,7 @@ public class TestGestioneOrdini {
 		// Creo il mio articolo
 		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/2021");
 		Articolo articoloDaAggiungere = new Articolo("Videogioco sparatutto", "NVKDM88", 80, dataInserimentoArticolo);
-		
+
 		Date dataInserimentoArticolo2 = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/2022");
 		Articolo articoloDaAggiungere2 = new Articolo("Modellino nave", "JDFL78", 50, dataInserimentoArticolo);
 
@@ -410,9 +451,9 @@ public class TestGestioneOrdini {
 		// collego
 		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
 		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere2);
-		
+
 		System.out.println(articoloServiceInstance.sommaPrezziDegliArticoliConDestinatarioMarioRossi());
-		
+
 		System.out.println(".......testCercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale fine: PASSED.............");
 	}
 

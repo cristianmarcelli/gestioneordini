@@ -29,8 +29,8 @@ public class Ordine {
 	private String nomeDestinatario;
 	@Column(name = "indirizzo")
 	private String indirizzo;
-	@Column(name = "datapubblicazione")
-	private Date dataPubblicazione;
+	@Column(name = "dataspedizione")
+	private Date dataSpedizione;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ordine")
 	private Set<Articolo> articoli = new HashSet<>();
@@ -43,39 +43,39 @@ public class Ordine {
 	public Ordine() {
 	}
 
-	public Ordine(String nomeDestinatario, String indirizzo, Date dataPubblicazione, Set<Articolo> articoli,
+	public Ordine(String nomeDestinatario, String indirizzo, Date dataSpedizione, Set<Articolo> articoli,
 			LocalDateTime createDateTime, LocalDateTime updateDateTime) {
 		super();
 		this.nomeDestinatario = nomeDestinatario;
 		this.indirizzo = indirizzo;
-		this.dataPubblicazione = dataPubblicazione;
+		this.dataSpedizione = dataSpedizione;
 		this.articoli = articoli;
 		this.createDateTime = createDateTime;
 		this.updateDateTime = updateDateTime;
 	}
 
-	public Ordine(String nomeDestinatario, String indirizzo, Date dataPubblicazione, Set<Articolo> articoli) {
+	public Ordine(String nomeDestinatario, String indirizzo, Date dataSpedizione, Set<Articolo> articoli) {
 		super();
 		this.nomeDestinatario = nomeDestinatario;
 		this.indirizzo = indirizzo;
-		this.dataPubblicazione = dataPubblicazione;
+		this.dataSpedizione = dataSpedizione;
 		this.articoli = articoli;
 	}
 
-	public Ordine(String nomeDestinatario, String indirizzo, Date dataPubblicazione) {
+	public Ordine(String nomeDestinatario, String indirizzo, Date dataSpedizione) {
 		super();
 		this.nomeDestinatario = nomeDestinatario;
 		this.indirizzo = indirizzo;
-		this.dataPubblicazione = dataPubblicazione;
+		this.dataSpedizione = dataSpedizione;
 	}
 
-	public Ordine(Long id, String nomeDestinatario, String indirizzo, Date dataPubblicazione, Set<Articolo> articoli,
+	public Ordine(Long id, String nomeDestinatario, String indirizzo, Date dataSpedizione, Set<Articolo> articoli,
 			LocalDateTime createDateTime, LocalDateTime updateDateTime) {
 		super();
 		this.id = id;
 		this.nomeDestinatario = nomeDestinatario;
 		this.indirizzo = indirizzo;
-		this.dataPubblicazione = dataPubblicazione;
+		this.dataSpedizione = dataSpedizione;
 		this.articoli = articoli;
 		this.createDateTime = createDateTime;
 		this.updateDateTime = updateDateTime;
@@ -105,12 +105,12 @@ public class Ordine {
 		this.indirizzo = indirizzo;
 	}
 
-	public Date getDataPubblicazione() {
-		return dataPubblicazione;
+	public Date getDataSpedizione() {
+		return dataSpedizione;
 	}
 
-	public void setDataPubblicazione(Date dataPubblicazione) {
-		this.dataPubblicazione = dataPubblicazione;
+	public void setDataSpedizione(Date dataPubdataSpedizioneblicazione) {
+		this.dataSpedizione = dataSpedizione;
 	}
 
 	public Set<Articolo> getArticoli() {
@@ -140,7 +140,7 @@ public class Ordine {
 	@Override
 	public String toString() {
 		return "Ordine [id=" + id + ", nomeDestinatario=" + nomeDestinatario + ", indirizzo=" + indirizzo
-				+ ", dataPubblicazione=" + dataPubblicazione + ", articoli=" + articoli + ", createDateTime="
+				+ ", dataSpedizione=" + dataSpedizione + ", articoli=" + articoli + ", createDateTime="
 				+ createDateTime + ", updateDateTime=" + updateDateTime + "]";
 	}
 
