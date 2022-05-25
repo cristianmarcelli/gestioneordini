@@ -44,9 +44,9 @@ public class TestGestioneOrdini {
 
 //			testRimuoviArticoloDaOrdine(ordineServiceInstance, articoloServiceInstance);
 
-			testAggiungiArticoloACategoria(articoloServiceInstance, categoriaServiceInstance, ordineServiceInstance);
+//			testAggiungiArticoloACategoria(articoloServiceInstance, categoriaServiceInstance, ordineServiceInstance);
 
-//			testAggiungiCategoriaAdArticolo(categoriaServiceInstance, articoloServiceInstance);
+			testAggiungiCategoriaAdArticolo(categoriaServiceInstance, articoloServiceInstance, ordineServiceInstance);
 
 			System.out.println(
 					"****************************** fine batteria di test ********************************************");
@@ -144,7 +144,7 @@ public class TestGestioneOrdini {
 
 	private static void testAggiungiArticoloACategoria(ArticoloService articoloServiceInstance,
 			CategoriaService categoriaServiceInstance, OrdineService ordineServiceInstance) throws Exception {
-		
+
 		// Creo ordine
 		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("17/01/2019");
 
@@ -164,6 +164,29 @@ public class TestGestioneOrdini {
 
 		// collego
 		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
+	}
+
+	private static void testAggiungiCategoriaAdArticolo(CategoriaService categoriaServiceInstance,
+			ArticoloService articoloServiceInstance, OrdineService ordineServiceInstance) throws Exception {
+		// Creo ordine
+		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2018");
+
+		Ordine ordineInstance = new Ordine("Brando Balenziani", "Potenza - Via Carlo Alberti, 90", dataPubblicazioneOrdine);
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
+
+		// Creo la categoria
+		Categoria categoriaInstance = new Categoria("Intr", "intrattenimento");
+
+		// Creo il mio articolo
+		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/2014");
+		Articolo articoloDaAggiungere = new Articolo("tastiera rgb", "BNDKL729", 26, dataInserimentoArticolo);
+
+		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
+		articoloDaAggiungere.setOrdine(ordineInstance);
+		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+
+		// collego
+		articoloServiceInstance.aggiungiCategoria(articoloDaAggiungere, categoriaInstance);
 	}
 
 
