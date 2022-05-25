@@ -21,7 +21,7 @@ public interface OrdineService {
 
 	public void rimuovi(Long idOrdine) throws Exception;
 	
-	public List<Ordine> cercaOrdineTramiteCategoria(Categoria categoriaInput) throws Exception;
+	public List<Ordine> cercaOrdiniTramiteCategoria(Categoria categoriaInput) throws Exception;
 
 	// per injection
 	public void setOrdineDAO(OrdineDAO ordineDAO);

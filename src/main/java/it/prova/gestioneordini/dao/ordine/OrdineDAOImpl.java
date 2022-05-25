@@ -3,6 +3,7 @@ package it.prova.gestioneordini.dao.ordine;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import it.prova.gestioneordini.model.Categoria;
@@ -53,18 +54,23 @@ public class OrdineDAOImpl implements OrdineDAO {
 
 	@Override
 	public Ordine findByIdFetchingArticoli(Long id) {
-		TypedQuery<Ordine> query = entityManager
-				.createQuery("select o FROM Ordine o left join fetch o.articoli a where o.id = :idOrdine", Ordine.class);
+		TypedQuery<Ordine> query = entityManager.createQuery(
+				"select o FROM Ordine o left join fetch o.articoli a where o.id = :idOrdine", Ordine.class);
 		query.setParameter("idOrdine", id);
 		return query.getResultList().stream().findFirst().orElse(null);
 	}
 
 	@Override
 	public List<Ordine> findOrdiniByCategoria(Categoria categoriaInput) {
-		TypedQuery<Ordine> query = entityManager
-				.createQuery("select o from Ordine o join o.categorie c where c.id = :idCategoria", Ordine.class);
-		query.setParameter("idCategoria", categoriaInput);
-		return query.getResultList();
+		Query queryDaRitornare = entityManager.createNativeQuery(
+				"select o.nomedestinatario\r\n"
+				+ "from Ordine o, Articolo a, Categoria c, articolo_categoria x\r\n"
+				+ "where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and c.id = ?1");
+		queryDaRitornare.setParameter(1, categoriaInput);
+		
+		return queryDaRitornare.getResultList();
 	}
+	
+//"select o from Ordine o, Articolo a, Categoria c, articolo_categoria x where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and c.id = :idCategoria;");
 
 }

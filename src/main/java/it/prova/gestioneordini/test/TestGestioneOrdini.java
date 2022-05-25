@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.management.RuntimeErrorException;
+
 import it.prova.gestioneordini.dao.EntityManagerUtil;
 import it.prova.gestioneordini.model.Articolo;
 import it.prova.gestioneordini.model.Categoria;
@@ -46,7 +48,9 @@ public class TestGestioneOrdini {
 
 //			testAggiungiArticoloACategoria(articoloServiceInstance, categoriaServiceInstance, ordineServiceInstance);
 
-			testAggiungiCategoriaAdArticolo(categoriaServiceInstance, articoloServiceInstance, ordineServiceInstance);
+//			testAggiungiCategoriaAdArticolo(categoriaServiceInstance, articoloServiceInstance, ordineServiceInstance);
+			
+			testCercaOrdiniTramiteCategoria(categoriaServiceInstance, ordineServiceInstance);
 
 			System.out.println(
 					"****************************** fine batteria di test ********************************************");
@@ -171,7 +175,8 @@ public class TestGestioneOrdini {
 		// Creo ordine
 		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2018");
 
-		Ordine ordineInstance = new Ordine("Brando Balenziani", "Potenza - Via Carlo Alberti, 90", dataPubblicazioneOrdine);
+		Ordine ordineInstance = new Ordine("Brando Balenziani", "Potenza - Via Carlo Alberti, 90",
+				dataPubblicazioneOrdine);
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
 
 		// Creo la categoria
@@ -189,6 +194,20 @@ public class TestGestioneOrdini {
 		articoloServiceInstance.aggiungiCategoria(articoloDaAggiungere, categoriaInstance);
 	}
 
+	public static void testCercaOrdiniTramiteCategoria(CategoriaService categoriaServiceInstance,
+			OrdineService ordineServiceInstance) throws Exception {
+		System.out.println(".......testCercaOrdiniTramiteCategoria inizio.............");
 
+		// Creo la categoria
+		Categoria categoriaDaRicercare = categoriaServiceInstance.listAll().get(4);
+		
+		if (categoriaDaRicercare.getId() == 0) {
+			throw new RuntimeException("Categoria non trovata");
+		}
+
+		System.out.println(ordineServiceInstance.cercaOrdiniTramiteCategoria(categoriaDaRicercare));
+
+		System.out.println(".......testCercaOrdiniTramiteCategoria fine: PASSED.............");
+	}
 
 }

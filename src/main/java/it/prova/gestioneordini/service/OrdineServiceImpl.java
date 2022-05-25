@@ -140,7 +140,7 @@ public class OrdineServiceImpl implements OrdineService {
 	}
 
 	@Override
-	public List<Ordine> cercaOrdineTramiteCategoria(Categoria categoriaInput) throws Exception {
+	public List<Ordine> cercaOrdiniTramiteCategoria(Categoria categoriaInput) throws Exception {
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 
 		try {
