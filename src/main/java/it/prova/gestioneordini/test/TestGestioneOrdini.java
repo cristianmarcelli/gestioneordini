@@ -58,8 +58,13 @@ public class TestGestioneOrdini {
 
 //			testCercaOrdinePiuRecente(ordineServiceInstance, categoriaServiceInstance, articoloServiceInstance);
 
-			testCercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue(ordineServiceInstance,
-					categoriaServiceInstance, articoloServiceInstance);
+//			testCercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue(ordineServiceInstance,
+//					categoriaServiceInstance, articoloServiceInstance);
+
+//			testCercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale(ordineServiceInstance, articoloServiceInstance,
+//					categoriaServiceInstance);
+			
+			testRimozioneOrdineConArticoliAssociati(ordineServiceInstance, articoloServiceInstance, categoriaServiceInstance);
 
 //			System.out.println(
 //					"****************************** fine batteria di test ********************************************");
@@ -118,6 +123,34 @@ public class TestGestioneOrdini {
 
 		ordineServiceInstance.rimuovi(ordineInstance.getId());
 		System.out.println(".......testRimozioneOrdine fine: PASSED.............");
+	}
+
+	private static void testRimozioneOrdineConArticoliAssociati(OrdineService ordineServiceInstance,
+			ArticoloService articoloServiceInstance, CategoriaService categoriaServiceInstance) throws Exception {
+		System.out.println(".......testRimozioneOrdineConArticoliAssociati inizio.............");
+
+		// Creo ordine
+				Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2021");
+
+				Ordine ordineInstance = new Ordine("Michele Bruni", "Napoli - Via Gambero, 12", dataPubblicazioneOrdine);
+				ordineServiceInstance.inserisciNuovo(ordineInstance);
+
+				// Creo la categoria
+				Categoria categoriaInstance = new Categoria("Svago", "JKFJASD99999999");
+
+				// Creo il mio articolo
+				Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/2019");
+				Articolo articoloDaAggiungere = new Articolo("Pallone da calcio", "LLL909090", 12, dataInserimentoArticolo);
+
+				categoriaServiceInstance.inserisciNuovo(categoriaInstance);
+				articoloDaAggiungere.setOrdine(ordineInstance);
+				articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+
+				// collego
+				categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
+
+		ordineServiceInstance.rimuovi(ordineInstance.getId());
+		System.out.println(".......testRimozioneOrdineConArticoliAssociati fine: PASSED.............");
 	}
 
 	private static void testCollegaArticoloAdOrdine(OrdineService ordineServiceInstance,
@@ -316,6 +349,35 @@ public class TestGestioneOrdini {
 
 		System.out.println(
 				".......testCercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue fine: PASSED.............");
+	}
+
+	public static void testCercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale(OrdineService ordineServiceInstance,
+			ArticoloService articoloServiceInstance, CategoriaService categoriaServiceInstance) throws Exception {
+		System.out.println(".......testCercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale inizio.............");
+
+		// Creo ordine
+		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2022");
+
+		Ordine ordineInstance = new Ordine("Carlo Baronetti", "Perugia - Via Firenze, 22", dataPubblicazioneOrdine);
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
+
+		// Creo la categoria
+		Categoria categoriaInstance = new Categoria("PPPPPOOOO", "Intrattenimento videoludico");
+
+		// Creo il mio articolo
+		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/2022");
+		Articolo articoloDaAggiungere = new Articolo("Videogioco sparatutto", "NVKDM88", 80, dataInserimentoArticolo);
+
+		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
+		articoloDaAggiungere.setOrdine(ordineInstance);
+		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+
+		// collego
+		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
+
+		System.out.println(ordineServiceInstance.cercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale("NVK"));
+
+		System.out.println(".......testCercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale fine: PASSED.............");
 	}
 
 }

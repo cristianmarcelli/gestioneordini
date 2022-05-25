@@ -195,4 +195,20 @@ public class OrdineServiceImpl implements OrdineService {
 		}
 	}
 
+	@Override
+	public List<String> cercaTuttiIndirizziDiOrdiniConCheckNumeroSeriale(String numeroSerialeInput) throws Exception {
+		EntityManager entityManager = EntityManagerUtil.getEntityManager();
+
+		try {
+			ordineDAO.setEntityManager(entityManager);
+
+			return ordineDAO.findAllIndirizziDiOrdiniConCheckNumeroSeriale(numeroSerialeInput);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			EntityManagerUtil.closeEntityManager(entityManager);
+		}
+	}
+
 }

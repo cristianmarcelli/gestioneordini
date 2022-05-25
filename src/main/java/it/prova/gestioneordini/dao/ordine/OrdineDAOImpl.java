@@ -79,4 +79,11 @@ public class OrdineDAOImpl implements OrdineDAO {
 		return query.getSingleResult();
 
 	}
+
+	@Override
+	public List<String> findAllIndirizziDiOrdiniConCheckNumeroSeriale(String numeroSerialeInput) {
+		TypedQuery<String> query = entityManager.createQuery("select o.indirizzo FROM Ordine o join o.articoli a where a.numeroSeriale like ?1", String.class);
+		query.setParameter(1, "%" + numeroSerialeInput + "%");
+		return query.getResultList();
+	}
 }

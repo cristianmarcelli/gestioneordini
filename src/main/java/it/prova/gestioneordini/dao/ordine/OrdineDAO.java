@@ -15,5 +15,7 @@ public interface OrdineDAO extends IBaseDAO<Ordine> {
 
 //	Voglio il più recente ordine in termini di spedizione (dataSpedizione in ordine) relativo ad una categoria data in input
 	public Ordine findOrdinePiuRecente(Categoria categoriaInput);
+	
+	public List<String> findAllIndirizziDiOrdiniConCheckNumeroSeriale(String numeroSerialeInput);
 
 }
