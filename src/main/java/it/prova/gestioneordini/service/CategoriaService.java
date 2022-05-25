@@ -24,6 +24,8 @@ public interface CategoriaService {
 	public void aggiungiArticolo(Categoria categoriaInstance, Articolo articoloInstance) throws Exception;
 
 	public List<Categoria> cercaTutteLeCategorieDegliArticoli(Ordine ordineInput) throws Exception;
+	
+	public List<String> cercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue() throws Exception;
 
 	// per injection
 	public void setCategoriaDAO(CategoriaDAO categoriaDAO);

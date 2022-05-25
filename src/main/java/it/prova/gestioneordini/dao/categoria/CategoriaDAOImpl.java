@@ -54,8 +54,8 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 
 	@Override
 	public Categoria findByIdFetchingArticoli(Long id) {
-		TypedQuery<Categoria> query = entityManager
-				.createQuery("select c FROM Categoria c left join fetch c.articoli a where c.id = :idCategoria", Categoria.class);
+		TypedQuery<Categoria> query = entityManager.createQuery(
+				"select c FROM Categoria c left join fetch c.articoli a where c.id = :idCategoria", Categoria.class);
 		query.setParameter("idCategoria", id);
 		return query.getResultList().stream().findFirst().orElse(null);
 	}
@@ -63,12 +63,17 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 	@Override
 	public List<Categoria> findAllCategorieDegliArticoli(Ordine ordineInput) {
 		Query queryDaRitornare = entityManager.createNativeQuery(
-				"select c.descrizione\r\n"
-				+ "from Ordine o, Articolo a, Categoria c, articolo_categoria x\r\n"
-				+ "where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and o.id = ?1");
+				"select c.descrizione\r\n" + "from Ordine o, Articolo a, Categoria c, articolo_categoria x\r\n"
+						+ "where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and o.id = ?1");
 		queryDaRitornare.setParameter(1, ordineInput);
-		
+
 		return queryDaRitornare.getResultList();
+	}
+
+	@Override
+	public List<String> findAllCodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue() {
+		TypedQuery<String> query = entityManager.createQuery("select c.codice FROM Ordine o join o.articoli a join a.categorie c where o.dataPubblicazione like '2022-02%'", String.class);
+		return query.getResultList();
 	}
 
 }

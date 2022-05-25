@@ -54,9 +54,12 @@ public class TestGestioneOrdini {
 
 //			testCercaTutteLeCategorieDegliArticoli(categoriaServiceInstance, ordineServiceInstance);
 
-			testSommaPrezziDiArticoliTramiteCategoria(articoloServiceInstance, categoriaServiceInstance);
+//			testSommaPrezziDiArticoliTramiteCategoria(articoloServiceInstance, categoriaServiceInstance);
 
 //			testCercaOrdinePiuRecente(ordineServiceInstance, categoriaServiceInstance, articoloServiceInstance);
+
+			testCercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue(ordineServiceInstance,
+					categoriaServiceInstance, articoloServiceInstance);
 
 //			System.out.println(
 //					"****************************** fine batteria di test ********************************************");
@@ -253,33 +256,66 @@ public class TestGestioneOrdini {
 		System.out.println(".......testSommaPrezziDiArticoliTramiteCategoria fine: PASSED.............");
 	}
 
-	public static void testCercaOrdinePiuRecente(OrdineService ordineServiceInstance,
-			CategoriaService categoriaServiceInstance, ArticoloService articoloServiceInstance) throws Exception {
-		System.out.println(".......testCercaOrdinePiuRecente inizio.............");
+//	public static void testCercaOrdinePiuRecente(OrdineService ordineServiceInstance,
+//			CategoriaService categoriaServiceInstance, ArticoloService articoloServiceInstance) throws Exception {
+//		System.out.println(".......testCercaOrdinePiuRecente inizio.............");
+//
+//		// Creo ordine
+//		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2018");
+//
+//		Ordine ordineInstance = new Ordine("Andrea Saleri", "Catanzaro - Via Roma, 76", dataPubblicazioneOrdine);
+//		ordineServiceInstance.inserisciNuovo(ordineInstance);
+//
+//		// Creo la categoria
+//		Categoria categoriaInstance = new Categoria("Intr", "intrattenimento");
+//
+//		// Creo il mio articolo
+//		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/2014");
+//		Articolo articoloDaAggiungere = new Articolo("tastiera rgb", "BNDKL729", 26, dataInserimentoArticolo);
+//
+//		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
+//		articoloDaAggiungere.setOrdine(ordineInstance);
+//		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+//
+//		// collego
+//		articoloServiceInstance.aggiungiCategoria(articoloDaAggiungere, categoriaInstance);
+//
+//		System.out.println(ordineServiceInstance.cercaOrdinePiuRecente(categoriaDaRicercare));
+//
+//		System.out.println(".......testCercaOrdinePiuRecente fine: PASSED.............");
+//	}
+
+	public static void testCercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue(
+			OrdineService ordineServiceInstance, CategoriaService categoriaServiceInstance,
+			ArticoloService articoloServiceInstance) throws Exception {
+		System.out.println(
+				".......testCercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue inizio.............");
 
 		// Creo ordine
-		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("01/02/2018");
+		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("26/02/2022");
 
-		Ordine ordineInstance = new Ordine("Andrea Saleri", "Catanzaro - Via Roma, 76", dataPubblicazioneOrdine);
+		Ordine ordineInstance = new Ordine("Carlo Baronetti", "Perugia - Via Firenze, 22", dataPubblicazioneOrdine);
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
 
 		// Creo la categoria
-		Categoria categoriaInstance = new Categoria("Intr", "intrattenimento");
+		Categoria categoriaInstance = new Categoria("PPPPPOOOO", "Intrattenimento videoludico");
 
 		// Creo il mio articolo
-		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/2014");
-		Articolo articoloDaAggiungere = new Articolo("tastiera rgb", "BNDKL729", 26, dataInserimentoArticolo);
+		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("10/02/2022");
+		Articolo articoloDaAggiungere = new Articolo("Videogioco sparatutto", "NVKDM88", 80, dataInserimentoArticolo);
 
 		categoriaServiceInstance.inserisciNuovo(categoriaInstance);
 		articoloDaAggiungere.setOrdine(ordineInstance);
 		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
 
 		// collego
-		articoloServiceInstance.aggiungiCategoria(articoloDaAggiungere, categoriaInstance);
+		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
 
-		System.out.println(ordineServiceInstance.cercaOrdinePiuRecente(categoriaInstance));
+		System.out.println(
+				categoriaServiceInstance.cercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue());
 
-		System.out.println(".......testCercaOrdinePiuRecente fine: PASSED.............");
+		System.out.println(
+				".......testCercaTuttiICodiciDiCategorieDiOrdiniEffettuatiAFebbraioDuemilaventidue fine: PASSED.............");
 	}
 
 }

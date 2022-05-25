@@ -22,7 +22,7 @@ public interface ArticoloService {
 
 	public void aggiungiCategoria(Articolo articoloInstance, Categoria categoriaInstance) throws Exception;
 	
-	public int sommaDeiPrezziDiArticoliTramiteCategoria(Categoria categoriaInput) throws Exception;
+	public Long sommaDeiPrezziDiArticoliTramiteCategoria(Categoria categoriaInput) throws Exception;
 
 	// per injection
 	public void setArticoloDAO(ArticoloDAO articoloDAO);

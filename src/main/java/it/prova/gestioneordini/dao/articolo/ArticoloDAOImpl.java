@@ -1,5 +1,6 @@
 package it.prova.gestioneordini.dao.articolo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -61,12 +62,12 @@ public class ArticoloDAOImpl implements ArticoloDAO {
 	}
 
 	@Override
-	public int sumPrezziDegliArticoli(Categoria categoriaInput) {
-		Query queryDaRitornare = entityManager.createNativeQuery(
-				"select sum(a.prezzosingolo) from Ordine o, Articolo a, Categoria c, articolo_categoria x where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and c.id = ?1");
-		queryDaRitornare.setParameter(1, categoriaInput);
-
-		return (int) queryDaRitornare.getSingleResult();
+	public Long sumPrezziDegliArticoli(Categoria categoriaInput){
+		Query q = entityManager.createNativeQuery(
+				"select sum(a.prezzosingolo) from articolo a inner join articolo_categoria ac on a.id=ac.articolo_id inner join categoria c on ac.categoria_id=c.id where c.id= ?1");
+		q.setParameter(1, categoriaInput.getId());
+		BigDecimal result = (BigDecimal) q.getResultList().stream().findFirst().get();
+		return result.longValue();
 	}
 
 }

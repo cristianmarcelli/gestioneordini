@@ -64,23 +64,19 @@ public class OrdineDAOImpl implements OrdineDAO {
 	@Override
 	public List<Ordine> findOrdiniByCategoria(Categoria categoriaInput) {
 		Query queryDaRitornare = entityManager.createNativeQuery(
-				"select o.nomedestinatario\r\n"
-				+ "from Ordine o, Articolo a, Categoria c, articolo_categoria x\r\n"
-				+ "where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and c.id = ?1");
+				"select o.nomedestinatario\r\n" + "from Ordine o, Articolo a, Categoria c, articolo_categoria x\r\n"
+						+ "where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and c.id = ?1");
 		queryDaRitornare.setParameter(1, categoriaInput);
-		
+
 		return queryDaRitornare.getResultList();
 	}
 
 	@Override
 	public Ordine findOrdinePiuRecente(Categoria categoriaInput) {
-		Query queryDaRitornare = entityManager.createNativeQuery(
-				"select max(o.datapubblicazione)\r\n"
-				+ "from Ordine o, Articolo a, Categoria c, articolo_categoria x\r\n"
-				+ "where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and c.id = 1?");
-		queryDaRitornare.setParameter(1, categoriaInput);
-		
-		return  (Ordine) queryDaRitornare.getSingleResult();
-	}
+		TypedQuery<Ordine> query = entityManager.createQuery(
+				"select o from Ordine o join o.articoli a join a.categorie c where c.id = :idCategoria", Ordine.class);
+		query.setParameter("idCategoria", categoriaInput.getId());
+		return query.getSingleResult();
 
+	}
 }
