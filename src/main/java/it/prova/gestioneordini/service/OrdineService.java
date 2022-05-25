@@ -20,8 +20,6 @@ public interface OrdineService {
 	public void inserisciNuovo(Ordine ordineInstance) throws Exception;
 
 	public void rimuovi(Long idOrdine) throws Exception;
-	
-	public void aggiungiArticolo(Ordine ordineInstance, Articolo articoloInstance) throws Exception;
 
 	// per injection
 	public void setOrdineDAO(OrdineDAO ordineDAO);

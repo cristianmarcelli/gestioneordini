@@ -138,27 +138,4 @@ public class OrdineServiceImpl implements OrdineService {
 		}
 	}
 
-	@Override
-	public void aggiungiArticolo(Ordine ordineInstance, Articolo articoloInstance) throws Exception {
-		EntityManager entityManager = EntityManagerUtil.getEntityManager();
-
-		try {
-			entityManager.getTransaction().begin();
-
-			ordineDAO.setEntityManager(entityManager);
-
-			ordineInstance = entityManager.merge(ordineInstance);
-			articoloInstance = entityManager.merge(articoloInstance);
-
-			ordineInstance.getArticoli().add(articoloInstance);
-			entityManager.getTransaction().commit();
-		} catch (Exception e) {
-			entityManager.getTransaction().rollback();
-			e.printStackTrace();
-			throw e;
-		} finally {
-			EntityManagerUtil.closeEntityManager(entityManager);
-		}
-	}
-
 }
