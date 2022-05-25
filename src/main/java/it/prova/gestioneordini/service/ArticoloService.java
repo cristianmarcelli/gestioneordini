@@ -21,6 +21,8 @@ public interface ArticoloService {
 	public void rimuovi(Long idArticolo) throws Exception;
 
 	public void aggiungiCategoria(Articolo articoloInstance, Categoria categoriaInstance) throws Exception;
+	
+	public int contaQuantiPrezziDiArticoliTramiteCategoria(Categoria categoriaInput) throws Exception;
 
 	// per injection
 	public void setArticoloDAO(ArticoloDAO articoloDAO);

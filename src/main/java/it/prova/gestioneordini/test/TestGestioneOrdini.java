@@ -49,12 +49,12 @@ public class TestGestioneOrdini {
 //			testAggiungiArticoloACategoria(articoloServiceInstance, categoriaServiceInstance, ordineServiceInstance);
 
 //			testAggiungiCategoriaAdArticolo(categoriaServiceInstance, articoloServiceInstance, ordineServiceInstance);
-			
+
 //			testCercaOrdiniTramiteCategoria(categoriaServiceInstance, ordineServiceInstance);
+
+//			testCercaTutteLeCategorieDegliArticoli(categoriaServiceInstance, ordineServiceInstance);
 			
-			testCercaTutteLeCategorieDegliArticoli(categoriaServiceInstance, ordineServiceInstance);
-			
-			
+			testContaQuantiPrezziDiArticoliTramiteCategoria(articoloServiceInstance, categoriaServiceInstance);
 
 //			System.out.println(
 //					"****************************** fine batteria di test ********************************************");
@@ -204,7 +204,7 @@ public class TestGestioneOrdini {
 
 		// Creo la categoria
 		Categoria categoriaDaRicercare = categoriaServiceInstance.listAll().get(4);
-		
+
 		if (categoriaDaRicercare.getId() == 0) {
 			throw new RuntimeException("Categoria non trovata");
 		}
@@ -213,14 +213,14 @@ public class TestGestioneOrdini {
 
 		System.out.println(".......testCercaOrdiniTramiteCategoria fine: PASSED.............");
 	}
-	
+
 	public static void testCercaTutteLeCategorieDegliArticoli(CategoriaService categoriaServiceInstance,
 			OrdineService ordineServiceInstance) throws Exception {
 		System.out.println(".......testCercaOrdiniTramiteCategoria inizio.............");
 
-		// Creo la categoria
+		// Creo l'ordine
 		Ordine ordineDaRicercare = ordineServiceInstance.listAll().get(18);
-		
+
 		if (ordineDaRicercare.getId() == 0) {
 			throw new RuntimeException("Categoria non trovata");
 		}
@@ -229,5 +229,23 @@ public class TestGestioneOrdini {
 
 		System.out.println(".......testCercaOrdiniTramiteCategoria fine: PASSED.............");
 	}
+
+	public static void testContaQuantiPrezziDiArticoliTramiteCategoria(ArticoloService articoloServiceInstance,
+			CategoriaService categoriaServiceInstance) throws Exception {
+		System.out.println(".......testCercaOrdiniTramiteCategoria inizio.............");
+
+		// Creo la categoria
+		Categoria categoriaDaRicercare = categoriaServiceInstance.listAll().get(4);
+
+		if (categoriaDaRicercare.getId() == 0) {
+			throw new RuntimeException("Categoria non trovata");
+		}
+
+		System.out.println(articoloServiceInstance.contaQuantiPrezziDiArticoliTramiteCategoria(categoriaDaRicercare));
+
+		System.out.println(".......testCercaOrdiniTramiteCategoria fine: PASSED.............");
+	}
+
+//	contaQuantiPrezziDiArticoliTramiteCategoria
 
 }

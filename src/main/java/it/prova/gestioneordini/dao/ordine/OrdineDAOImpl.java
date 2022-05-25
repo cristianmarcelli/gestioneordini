@@ -70,7 +70,5 @@ public class OrdineDAOImpl implements OrdineDAO {
 		
 		return queryDaRitornare.getResultList();
 	}
-	
-//"select o from Ordine o, Articolo a, Categoria c, articolo_categoria x where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and c.id = :idCategoria;");
 
 }

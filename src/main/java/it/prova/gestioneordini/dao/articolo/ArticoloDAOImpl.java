@@ -3,9 +3,11 @@ package it.prova.gestioneordini.dao.articolo;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import it.prova.gestioneordini.model.Articolo;
+import it.prova.gestioneordini.model.Categoria;
 
 public class ArticoloDAOImpl implements ArticoloDAO {
 
@@ -56,6 +58,17 @@ public class ArticoloDAOImpl implements ArticoloDAO {
 				"select a FROM Articolo a left join fetch a.categorie c where a.id = :idArticolo", Articolo.class);
 		query.setParameter("idArticolo", id);
 		return query.getResultList().stream().findFirst().orElse(null);
+	}
+
+	@Override
+	public int countQuantiPrezziDegliArticoli(Categoria categoriaInput) {
+		Query queryDaRitornare = entityManager.createNativeQuery(
+				"select count(a.prezzosingolo)\r\n"
+				+ "from Ordine o, Articolo a, Categoria c, articolo_categoria x\r\n"
+				+ "where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and c.id = ?1");
+		queryDaRitornare.setParameter(1, categoriaInput);
+		
+		return queryDaRitornare.getResultList().size();
 	}
 
 }
