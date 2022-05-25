@@ -3,9 +3,11 @@ package it.prova.gestioneordini.dao.categoria;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import it.prova.gestioneordini.model.Categoria;
+import it.prova.gestioneordini.model.Ordine;
 
 public class CategoriaDAOImpl implements CategoriaDAO {
 
@@ -56,6 +58,17 @@ public class CategoriaDAOImpl implements CategoriaDAO {
 				.createQuery("select c FROM Categoria c left join fetch c.articoli a where c.id = :idCategoria", Categoria.class);
 		query.setParameter("idCategoria", id);
 		return query.getResultList().stream().findFirst().orElse(null);
+	}
+
+	@Override
+	public List<Categoria> findAllCategorieDegliArticoli(Ordine ordineInput) {
+		Query queryDaRitornare = entityManager.createNativeQuery(
+				"select c.descrizione\r\n"
+				+ "from Ordine o, Articolo a, Categoria c, articolo_categoria x\r\n"
+				+ "where o.id = a.ordine_id and a.id = x.articolo_id and c.id = x.categoria_id and o.id = ?1");
+		queryDaRitornare.setParameter(1, ordineInput);
+		
+		return queryDaRitornare.getResultList();
 	}
 
 }

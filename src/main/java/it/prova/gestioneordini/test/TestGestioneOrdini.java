@@ -26,15 +26,15 @@ public class TestGestioneOrdini {
 
 		try {
 
-			System.out.println("In tabella Ordine ci sono " + ordineServiceInstance.listAll().size() + " elementi.");
-			System.out
-					.println("In tabella Articolo ci sono " + articoloServiceInstance.listAll().size() + " elementi.");
-			System.out.println(
-					"In tabella Categoria ci sono " + categoriaServiceInstance.listAll().size() + " elementi.");
-			System.out.println(
-					"**************************** inizio batteria di test ********************************************");
-			System.out.println(
-					"*************************************************************************************************");
+//			System.out.println("In tabella Ordine ci sono " + ordineServiceInstance.listAll().size() + " elementi.");
+//			System.out
+//					.println("In tabella Articolo ci sono " + articoloServiceInstance.listAll().size() + " elementi.");
+//			System.out.println(
+//					"In tabella Categoria ci sono " + categoriaServiceInstance.listAll().size() + " elementi.");
+//			System.out.println(
+//					"**************************** inizio batteria di test ********************************************");
+//			System.out.println(
+//					"*************************************************************************************************");
 
 //			testInserimentoNuovoOrdine(ordineServiceInstance);
 
@@ -50,17 +50,21 @@ public class TestGestioneOrdini {
 
 //			testAggiungiCategoriaAdArticolo(categoriaServiceInstance, articoloServiceInstance, ordineServiceInstance);
 			
-			testCercaOrdiniTramiteCategoria(categoriaServiceInstance, ordineServiceInstance);
+//			testCercaOrdiniTramiteCategoria(categoriaServiceInstance, ordineServiceInstance);
+			
+			testCercaTutteLeCategorieDegliArticoli(categoriaServiceInstance, ordineServiceInstance);
+			
+			
 
-			System.out.println(
-					"****************************** fine batteria di test ********************************************");
-			System.out.println(
-					"*************************************************************************************************");
-			System.out.println("In tabella Ordine ci sono " + ordineServiceInstance.listAll().size() + " elementi.");
-			System.out
-					.println("In tabella Articolo ci sono " + articoloServiceInstance.listAll().size() + " elementi.");
-			System.out.println(
-					"In tabella Categoria ci sono " + categoriaServiceInstance.listAll().size() + " elementi.");
+//			System.out.println(
+//					"****************************** fine batteria di test ********************************************");
+//			System.out.println(
+//					"*************************************************************************************************");
+//			System.out.println("In tabella Ordine ci sono " + ordineServiceInstance.listAll().size() + " elementi.");
+//			System.out
+//					.println("In tabella Articolo ci sono " + articoloServiceInstance.listAll().size() + " elementi.");
+//			System.out.println(
+//					"In tabella Categoria ci sono " + categoriaServiceInstance.listAll().size() + " elementi.");
 
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -206,6 +210,22 @@ public class TestGestioneOrdini {
 		}
 
 		System.out.println(ordineServiceInstance.cercaOrdiniTramiteCategoria(categoriaDaRicercare));
+
+		System.out.println(".......testCercaOrdiniTramiteCategoria fine: PASSED.............");
+	}
+	
+	public static void testCercaTutteLeCategorieDegliArticoli(CategoriaService categoriaServiceInstance,
+			OrdineService ordineServiceInstance) throws Exception {
+		System.out.println(".......testCercaOrdiniTramiteCategoria inizio.............");
+
+		// Creo la categoria
+		Ordine ordineDaRicercare = ordineServiceInstance.listAll().get(18);
+		
+		if (ordineDaRicercare.getId() == 0) {
+			throw new RuntimeException("Categoria non trovata");
+		}
+
+		System.out.println(categoriaServiceInstance.cercaTutteLeCategorieDegliArticoli(ordineDaRicercare));
 
 		System.out.println(".......testCercaOrdiniTramiteCategoria fine: PASSED.............");
 	}
