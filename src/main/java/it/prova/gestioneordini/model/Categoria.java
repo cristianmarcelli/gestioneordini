@@ -40,6 +40,16 @@ public class Categoria {
 	public Categoria() {
 	}
 
+	public Categoria(String descrizione, String codice, Set<Articolo> articoli, LocalDateTime createDateTime,
+			LocalDateTime updateDateTime) {
+		super();
+		this.descrizione = descrizione;
+		this.codice = codice;
+		this.articoli = articoli;
+		this.createDateTime = createDateTime;
+		this.updateDateTime = updateDateTime;
+	}
+
 	public Categoria(String descrizione, String codice) {
 		super();
 		this.descrizione = descrizione;

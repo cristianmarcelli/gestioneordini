@@ -43,6 +43,25 @@ public class Ordine {
 	public Ordine() {
 	}
 
+	public Ordine(String nomeDestinatario, String indirizzo, Date dataPubblicazione, Set<Articolo> articoli,
+			LocalDateTime createDateTime, LocalDateTime updateDateTime) {
+		super();
+		this.nomeDestinatario = nomeDestinatario;
+		this.indirizzo = indirizzo;
+		this.dataPubblicazione = dataPubblicazione;
+		this.articoli = articoli;
+		this.createDateTime = createDateTime;
+		this.updateDateTime = updateDateTime;
+	}
+
+	public Ordine(String nomeDestinatario, String indirizzo, Date dataPubblicazione, Set<Articolo> articoli) {
+		super();
+		this.nomeDestinatario = nomeDestinatario;
+		this.indirizzo = indirizzo;
+		this.dataPubblicazione = dataPubblicazione;
+		this.articoli = articoli;
+	}
+
 	public Ordine(String nomeDestinatario, String indirizzo, Date dataPubblicazione) {
 		super();
 		this.nomeDestinatario = nomeDestinatario;

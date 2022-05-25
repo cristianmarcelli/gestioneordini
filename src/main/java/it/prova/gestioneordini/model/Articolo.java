@@ -62,6 +62,19 @@ public class Articolo {
 		this.dataInserimento = dataInserimento;
 	}
 
+	public Articolo(String descrizione, String numeroSeriale, int prezzoSingolo, Date dataInserimento,
+			Set<Categoria> categorie, Ordine ordine, LocalDateTime createDateTime, LocalDateTime updateDateTime) {
+		super();
+		this.descrizione = descrizione;
+		this.numeroSeriale = numeroSeriale;
+		this.prezzoSingolo = prezzoSingolo;
+		this.dataInserimento = dataInserimento;
+		this.categorie = categorie;
+		this.ordine = ordine;
+		this.createDateTime = createDateTime;
+		this.updateDateTime = updateDateTime;
+	}
+
 	public Articolo(Long id, String descrizione, String numeroSeriale, int prezzoSingolo, Date dataInserimento) {
 		super();
 		this.id = id;
