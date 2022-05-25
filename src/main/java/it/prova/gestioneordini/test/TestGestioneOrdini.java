@@ -38,11 +38,15 @@ public class TestGestioneOrdini {
 
 //			testAggiornaOrdine(ordineServiceInstance);
 
-
 			// *******************************************
-			testRimozioneOrdine(ordineServiceInstance);
+			testCollegaArticoloAdOrdine(ordineServiceInstance, articoloServiceInstance);
+			// *******************************************
+//			testRimozioneOrdine(ordineServiceInstance);
+			// *******************************************
+//			testAggiungiArticoloACategoria(articoloServiceInstance, categoriaServiceInstance);
 			// *******************************************
 
+//			testAggiungiCategoriaAdArticolo(categoriaServiceInstance, articoloServiceInstance);
 
 			System.out.println(
 					"****************************** fine batteria di test ********************************************");
@@ -91,15 +95,70 @@ public class TestGestioneOrdini {
 		System.out.println(".......testInserimentoNuovoOrdine fine: PASSED.............");
 	}
 
-
-
 	private static void testRimozioneOrdine(OrdineService ordineServiceInstance) throws Exception {
 		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("17/01/2015");
 
 		Ordine ordineInstance = new Ordine("Annamaria Frasco", "Milano - Via dei baveri, 8", dataPubblicazioneOrdine);
 		ordineServiceInstance.inserisciNuovo(ordineInstance);
-		
+
 		ordineServiceInstance.rimuovi(ordineInstance.getId());
 	}
+
+	private static void testCollegaArticoloAdOrdine(OrdineService ordineServiceInstance,
+			ArticoloService articoloServiceInstance) throws Exception {
+		System.out.println(".......testAggiungiArticoloAdOrdine inizio.............");
+
+		// Creo ordine
+		Date dataPubblicazioneOrdine = new SimpleDateFormat("dd/MM/yyyy").parse("17/01/2019");
+
+		Ordine ordineInstance = new Ordine("Annalisa Birotti", "Firenze - Via Libia, 52", dataPubblicazioneOrdine);
+
+		// Creo articolo
+		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/2017");
+		Articolo articoloDaAggiungere = new Articolo("fumetto vintage", "GFK7238", 56, dataInserimentoArticolo);
+
+		// Inserisco e collego tutto
+		articoloDaAggiungere.setOrdine(ordineInstance);
+		ordineServiceInstance.inserisciNuovo(ordineInstance);
+		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+
+		if (articoloDaAggiungere.getId() == 0 | ordineInstance.getId() == 0) {
+			throw new RuntimeException("Impossibile inserire, articolo o ordine mancante");
+		}
+
+		System.out.println(".......testAggiungiArticoloAdOrdine fine.............");
+	}
+
+//	private static void testRimuoviArticoloDaOrdine(OrdineService ordineServiceInstance,
+//			ArticoloService articoloServiceInstance) throws Exception {
+//
+//	}
+
+//	private static void testAggiungiArticoloACategoria(ArticoloService articoloServiceInstance, CategoriaService categoriaServiceInstance) throws Exception {
+//		// Inserisco il mio articolo
+//		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/2014");
+//
+//		Articolo articoloDaAggiungere = new Articolo("fumetto vintage", "GFK7238", 56, dataInserimentoArticolo);
+//		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+//		
+//		Categoria categoriaInstance = new Categoria("Intr", "intrattenimento");
+//		
+//		//collego
+//		categoriaServiceInstance.aggiungiArticolo(categoriaInstance, articoloDaAggiungere);
+//	}
+
+//	private static void testAggiungiCategoriaAdArticolo(CategoriaService categoriaServiceInstance,
+//			ArticoloService articoloServiceInstance) throws Exception {
+//		// Inserisco il mio articolo
+//		Date dataInserimentoArticolo = new SimpleDateFormat("dd/MM/yyyy").parse("09/06/2014");
+//
+//		Articolo articoloDaAggiungere = new Articolo("fumetto vintage", "GFK7238", 56, dataInserimentoArticolo);
+//		articoloServiceInstance.inserisciNuovo(articoloDaAggiungere);
+//
+//		Categoria categoriaInstance = new Categoria("Intr", "intrattenimento");
+//
+//		// collego
+//		articoloServiceInstance.aggiungiCategoria(articoloDaAggiungere, categoriaInstance);
+//	}
 
 }
